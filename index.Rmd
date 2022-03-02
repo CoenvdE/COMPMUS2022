@@ -1,0 +1,317 @@
+---
+title: "Portfolio"
+author: "Coen van den Elsen"
+data: "DATA"
+output: 
+  flexdashboard::flex_dashboard:
+    storyboard: true
+    orientation: columns
+    vertical_layout: fill
+    theme:
+      version: 4
+      bootswatch: minty
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(spotifyr)
+library(dplyr)
+library(ggplot2)
+library(plotly)
+library(ggthemes)
+library(viridis)
+library(viridisLite)
+library(forcats)
+library(compmus)
+```
+
+
+```{r data load generating_summary_statistics, echo = FALSE}
+
+fkj <- get_playlist_audio_features("", "37i9dQZF1DZ06evO1x7AE9")
+tom_misch <- get_playlist_audio_features("", "37i9dQZF1DZ06evO0P3UNG")
+lianne_de_havas <- get_playlist_audio_features("", "37i9dQZF1DZ06evO1EwgdW")
+joy_crookes <- get_playlist_audio_features("", "37i9dQZF1DZ06evO3w1CV3")
+jorja_smith <- get_playlist_audio_features("", "37i9dQZF1DX1ykpeqTwA5m")
+mahalia <- get_playlist_audio_features("", "37i9dQZF1DZ06evO0AHQ3T")
+
+erykah_badu <- get_playlist_audio_features("", "37i9dQZF1DZ06evO4zhZAI")
+steve_wonder <- get_playlist_audio_features("", "37i9dQZF1DZ06evO4iAGsg")
+bill_withers <- get_playlist_audio_features("", "37i9dQZF1DX5MwHlrzAPLQ")
+marvin_gaye <- get_playlist_audio_features("", "37i9dQZF1DZ06evO1VI5MY")
+ray_charles <- get_playlist_audio_features("", "37i9dQZF1DZ06evO0FPX4A")
+aretha_franklin <- get_playlist_audio_features("", "37i9dQZF1DZ06evO4mP172")
+
+```
+
+
+```{r data prep, echo = FALSE}
+new <- rbind(fkj,tom_misch,lianne_de_havas,jorja_smith,mahalia,joy_crookes)
+new <- new %>%
+  add_column(generation = "new")
+
+old <- rbind(erykah_badu,steve_wonder,bill_withers,marvin_gaye,ray_charles,aretha_franklin)
+old <- old %>%
+  add_column(generation = "old")
+
+all <- rbind(old, new)
+
+```  
+
+```{r defining_a_theme, echo = FALSE}
+# Better to define your own function than to always type the same stuff
+theme_ilo <- function(){
+  theme_minimal() +
+  theme(
+    text = element_text(color = "gray25"),
+    plot.subtitle = element_text(size = 12),
+    plot.caption = element_text(color = "gray30"),
+    plot.background = element_rect(fill = "gray95"),
+    plot.margin = unit(c(5, 10, 5, 10), units = "mm")
+  )
+}
+```  
+
+
+### Corpus
+
+**Research Question**
+
+*How has the soul changed over time?*
+
+**Motivation**
+
+I want to research soul music. I am a musician myself and make soul/jazz/funk/RnB, I am curious how the music I listen and make everyday came to be and differce from earlier Thats why I decided to see how big soul artists through the years compare to eachother. To decide what artists I should include, I made a mix of artists that inspire me, artists that have ment a lot for the genre in the perspective of my guitar teacher (who finished his jazz conservatory master) and artists that made the top according to websites (Sources). These are the artists per generation:
+
+- **Old Generation**: Erykah Badu, Steve Wonder, Bill Withers, Marvin Gaye, Ray charles, Aretha Franklin.
+
+- **new generation**: Tom Misch, Lianne De Havas, FKJ, Joy Crookes, Jorja Smith, Mahalia.
+
+I, and the sources mentioned earlier, think these artists really represent the genre in their time and think it is a good representation of what I want to research. I do think more many names could be added, such as **Bobby Hebbs**, but I don’t think this would be of use. 
+
+**Hypotheses**
+
+I suspect the most difference will be seen in tempo and time, as most songs have been going faster and getting shorter through the years The tracks of all these artists will be compared, I think Bill Withers is the most atypical, because he does a lot of genres besides soul alone (like blues etc.)
+
+
+
+
+*Source*: https://www.rollingstone.com/music/music-lists/rolling-stone-readers-pick-the-top-10-rb-soul-singers-of-all-time-16607/
+
+### Overview of the generations **valence and tempo**
+
+```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
+ggplot(all, aes(x=tempo , y= playlist_name, size = valence, color = playlist_name)) +
+  geom_point() + scale_fill_viridis_d()  + xlim(0,250) + 
+  labs(title = "Old Generation", subtitle = "Valence and tempo per artist playlist", colour = "Playlist name",
+       x = "Tempo", y = "Playlist name", size = "Valence") + theme_tufte() + theme_ilo() + facet_grid( facets = . ~ generation)
+
+```
+
+*** 
+
+Interesting observations
+
+What is interesting to see is that there is one **outlier**, a song of *Erykah Badu*. This one is called *"Hi"*, which is not a full song, but definitely music, it is in the *"This is Erykah Badu"* playlist. This song has **no data**, valence and tempo are set to 0. Another interesting point is that 1 song of *Bill Withers*,*Dont want you on my mind*, has a **very high tempo** (240-250). There is also an **outlier**, like *"Hi"*, in the *This is Mahalia* playlist, Spotify has taken it out during the time I worked on the project. I Think this is a good decision. since it was a *track chat*, a discussion about a track she made, and not an actual song. 
+
+### Overview of the generations **valence and tempo**
+
+```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
+ggplotly(
+  ggplot(old,                         # Set up the plot.
+    aes(
+      x = valence,
+      y = energy,
+      size = track.popularity,
+      colour = danceability,
+      label = track.name           # Labels will be interactively visible.
+    )
+  ) +
+  geom_point() +                   # Scatter plot.
+  geom_rug(size = 0.1) +           # Add 'fringes' to show data distribution.
+  facet_wrap(~playlist_name) +           # Separate charts per country.
+  scale_x_continuous(              # Fine-tune the x axis.
+    limits = c(0, 1),
+    breaks = c(0, 0.50, 1),        # Use grid-lines for quadrants only.
+    minor_breaks = NULL            # Remove 'minor' grid-lines.
+  ) +
+  scale_y_continuous(              # Fine-tune the y axis in the same way.
+    limits = c(0, 1),
+    breaks = c(0, 0.50, 1),
+    minor_breaks = NULL
+  ) +
+  scale_colour_viridis_c(          # Use the cividis palette
+    option = "E",                  # Qualitative set.
+    alpha = 0.8,                   # Include some transparency
+    guide = "none"
+  ) +
+  scale_size_continuous(           # Fine-tune the sizes of each point.
+    guide = "none"                 # Remove the legend for size.
+  ) +
+  theme_light() +                  # Use a simpler theme.
+  labs(                            # Make the titles nice.
+    x = "Valence",
+    y = "Energy"
+  )
+)
+
+```
+
+### Overview of the generations **valence and tempo**
+
+```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
+ggplotly(
+  ggplot(new,                         # Set up the plot.
+    aes(
+      x = valence,
+      y = energy,
+      size = track.popularity,
+      colour = danceability,
+      label = track.name           # Labels will be interactively visible.
+    )
+  ) +
+  geom_point() +                   # Scatter plot.
+  geom_rug(size = 0.1) +           # Add 'fringes' to show data distribution.
+  facet_wrap(~playlist_name) +           # Separate charts per country.
+  scale_x_continuous(              # Fine-tune the x axis.
+    limits = c(0, 1),
+    breaks = c(0, 0.50, 1),        # Use grid-lines for quadrants only.
+    minor_breaks = NULL            # Remove 'minor' grid-lines.
+  ) +
+  scale_y_continuous(              # Fine-tune the y axis in the same way.
+    limits = c(0, 1),
+    breaks = c(0, 0.50, 1),
+    minor_breaks = NULL
+  ) +
+  scale_colour_viridis_c(          # Use the cividis palette
+    option = "E",                  # Qualitative set.
+    alpha = 0.8,                   # Include some transparency
+    guide = "none"
+  ) +
+  scale_size_continuous(           # Fine-tune the sizes of each point.
+    guide = "none"                 # Remove the legend for size.
+  ) +
+  theme_light() +                  # Use a simpler theme.
+  labs(                            # Make the titles nice.
+    x = "Valence",
+    y = "Energy"
+  )
+)
+
+```
+
+### comparing the generations **valence and tempo**
+
+```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
+ggplot(all, aes(x=valence , y= tempo, color = generation)) +
+  geom_point(size = 3) + scale_fill_viridis_d() + ylim(45,250)+ 
+  labs(title = "Both Generations", subtitle = "Valence and tempo per generation", colour = "Generation",
+       x = "Valence", y = "Tempo") + theme_tufte() + theme_ilo()
+```
+
+*** 
+
+As can be seen in the visualization, the *old generation* generally makes songs that are **higher in tempo and valence** then the *new generation*. This was surprising, since this means that the genre does not follow the trend of speeding up its songs.
+
+
+### comparing the generations **danceability and energy**
+
+```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
+ggplot(all, aes(x=energy , y= danceability, color = generation)) +
+  geom_point() + scale_fill_viridis_d() + 
+  labs(title = "Both Generations", subtitle = "energy and danceability per generation", colour = "Generation",
+       x = "Energy", y = "Danceability",) + theme_tufte() + facet_grid( facets = . ~ generation) + theme_ilo()
+```
+
+*** 
+
+As can be seen in the visualization, the *new generation* generally makes songs that have **higher danceability**, but **lower energy** than the *old generation*. I think it is interesting that the **tempo** goes down (as can be seen in the comparison of **tempo and valence**), but the **danceability** goes up. This could imply that songs are getting **groovier**.
+
+
+### **chromogram** of an interesting soul track
+
+```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
+sunny <-
+  get_tidy_audio_analysis("4vju55Ag7apDL2CfotuE7Q") %>%
+  select(segments) %>%
+  unnest(segments) %>%
+  select(start, duration, pitches)
+
+
+sunny %>%
+  mutate(pitches = map(pitches, compmus_normalise, "chebyshev")) %>%
+  compmus_gather_chroma() %>% 
+  ggplot(
+    aes(
+      x = start + duration / 2,
+      width = duration,
+      y = pitch_class,
+      fill = value
+    )
+  ) +
+  geom_tile() +
+  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
+  theme_minimal() +
+  scale_fill_viridis_c()
+```
+
+***
+
+I decided to visualize the song *"Sunny"* by *Bobby Hebbs*.
+This is not an artist from my corpus, but I think he deserves a honerable mention as he is a big inspiration to me personally and has influenced soul a lot.  I really wanted to visualize this song, because it **transposes** a few times. As seen in the chromogram, the song starts in *Emin* transposes to *Fmin*, *F#min* and ends in *Gmin*.
+I think this song is very interesting to see in the chromogram, as you can "see the transposing happen".
+
+### comparing *say a little prayer* from the old generation with a cover of the new generation with **Dynamic time wraping**
+
+```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
+
+DTW_cover <-
+  get_tidy_audio_analysis("1ZczOoLuCyDO5dKUPndxf5") %>%
+  select(segments) %>%
+  unnest(segments) %>%
+  select(start, duration, pitches)
+
+DTW_original <-
+  get_tidy_audio_analysis("3NfxSdJnVdon1axzloJgba") %>%
+  select(segments) %>%
+  unnest(segments) %>%
+  select(start, duration, pitches)
+
+compmus_long_distance(
+  DTW_cover %>% mutate(pitches = map(pitches, compmus_normalise, "chebyshev")),
+  DTW_original %>% mutate(pitches = map(pitches, compmus_normalise, "chebyshev")),
+  feature = pitches,
+  method = "euclidean"
+) %>%
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_equal() +
+  labs(x = "Cover", y = "Original") +
+  theme_minimal() +
+  scale_fill_viridis_c(guide = NULL) + theme_ilo() + theme_tufte()
+```
+
+*** 
+
+In the dynamic time warping graph, *Say a little prayer* by *Aretha Franklin* is compared to the *cover* of *Lianne de Havas*. As we can see in the visualization WHAT CAN WE CONCLUDE???
+
+### Conclusion and Discussion
+
+**Conclusion**
+
+to be implemented
+
+**Discussion**
+
+small group of artists, do not necessarily represent whole genre
+
