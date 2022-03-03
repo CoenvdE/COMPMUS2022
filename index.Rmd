@@ -96,27 +96,9 @@ I, and the sources mentioned earlier, think these artists really represent the g
 I suspect the most difference will be seen in tempo and time, as most songs have been going faster and getting shorter through the years The tracks of all these artists will be compared, I think Bill Withers is the most atypical, because he does a lot of genres besides soul alone (like blues etc.)
 
 
-
-
 *Source*: https://www.rollingstone.com/music/music-lists/rolling-stone-readers-pick-the-top-10-rb-soul-singers-of-all-time-16607/
 
-### Overview of the generations **valence and tempo**
-
-```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
-ggplot(all, aes(x=tempo , y= playlist_name, size = valence, color = playlist_name)) +
-  geom_point() + scale_fill_viridis_d()  + xlim(0,250) + 
-  labs(title = "Old Generation", subtitle = "Valence and tempo per artist playlist", colour = "Playlist name",
-       x = "Tempo", y = "Playlist name", size = "Valence") + theme_tufte() + theme_ilo() + facet_grid( facets = . ~ generation)
-
-```
-
-*** 
-
-Interesting observations
-
-What is interesting to see is that there is one **outlier**, a song of *Erykah Badu*. This one is called *"Hi"*, which is not a full song, but definitely music, it is in the *"This is Erykah Badu"* playlist. This song has **no data**, valence and tempo are set to 0. Another interesting point is that 1 song of *Bill Withers*,*Dont want you on my mind*, has a **very high tempo** (240-250). There is also an **outlier**, like *"Hi"*, in the *This is Mahalia* playlist, Spotify has taken it out during the time I worked on the project. I Think this is a good decision. since it was a *track chat*, a discussion about a track she made, and not an actual song. 
-
-### Overview of the generations **valence and tempo**
+### Overview of the **old generation**
 
 ```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
 ggplotly(
@@ -129,7 +111,7 @@ ggplotly(
       label = track.name           # Labels will be interactively visible.
     )
   ) +
-  geom_point() +                   # Scatter plot.
+  geom_point(show.legend = TRUE) +                   # Scatter plot.
   geom_rug(size = 0.1) +           # Add 'fringes' to show data distribution.
   facet_wrap(~playlist_name) +           # Separate charts per country.
   scale_x_continuous(              # Fine-tune the x axis.
@@ -145,21 +127,25 @@ ggplotly(
   scale_colour_viridis_c(          # Use the cividis palette
     option = "E",                  # Qualitative set.
     alpha = 0.8,                   # Include some transparency
-    guide = "none"
   ) +
   scale_size_continuous(           # Fine-tune the sizes of each point.
-    guide = "none"                 # Remove the legend for size.
-  ) +
+  guide = "legend") +
   theme_light() +                  # Use a simpler theme.
   labs(                            # Make the titles nice.
     x = "Valence",
     y = "Energy"
-  )
+  ) 
 )
 
 ```
 
-### Overview of the generations **valence and tempo**
+*** 
+
+Interesting observations
+
+What is interesting to see is that there is one **outlier**, a song of *Erykah Badu*. This one is called *"Hi"*, which is not a full song, but definitely music, it is in the *"This is Erykah Badu"* playlist. This song has **no  valence and tempo** stats, they are set to 0. Another interesting point is that 1 song of *Bill Withers*,*Dont want you on my mind*, has a **very high tempo** (240-250).
+
+### Overview of the **new generation**
 
 ```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
 ggplotly(
@@ -172,7 +158,7 @@ ggplotly(
       label = track.name           # Labels will be interactively visible.
     )
   ) +
-  geom_point() +                   # Scatter plot.
+  geom_point(show_guide=TRUE) +                   # Scatter plot.
   geom_rug(size = 0.1) +           # Add 'fringes' to show data distribution.
   facet_wrap(~playlist_name) +           # Separate charts per country.
   scale_x_continuous(              # Fine-tune the x axis.
@@ -188,25 +174,29 @@ ggplotly(
   scale_colour_viridis_c(          # Use the cividis palette
     option = "E",                  # Qualitative set.
     alpha = 0.8,                   # Include some transparency
-    guide = "none"
   ) +
   scale_size_continuous(           # Fine-tune the sizes of each point.
-    guide = "none"                 # Remove the legend for size.
-  ) +
+  guide = "legend") +
   theme_light() +                  # Use a simpler theme.
   labs(                            # Make the titles nice.
     x = "Valence",
     y = "Energy"
-  )
+  ) 
 )
 
 ```
+
+*** 
+
+Interesting observations
+
+There was also an **outlier**, like *"Hi"* (see old generation overview), in the *This is Mahalia* playlist, Spotify has taken it out during the time I worked on the project. I Think this is a good decision. since it was a *track chat*, a discussion about a track she made, and not an actual song. 
 
 ### comparing the generations **valence and tempo**
 
 ```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
 ggplot(all, aes(x=valence , y= tempo, color = generation)) +
-  geom_point(size = 3) + scale_fill_viridis_d() + ylim(45,250)+ 
+  geom_point(size = 3) +scale_fill_viridis_d() + ylim(45,250)+ 
   labs(title = "Both Generations", subtitle = "Valence and tempo per generation", colour = "Generation",
        x = "Valence", y = "Tempo") + theme_tufte() + theme_ilo()
 ```
@@ -303,7 +293,7 @@ compmus_long_distance(
 
 *** 
 
-In the dynamic time warping graph, *Say a little prayer* by *Aretha Franklin* is compared to the *cover* of *Lianne de Havas*. As we can see in the visualization WHAT CAN WE CONCLUDE???
+In the dynamic time warping graph, *Say a little prayer* by *Aretha Franklin* is compared to the *cover* of *Lianne de Havas*. As we can see in the visualization there is no line that shows similarities. This is because Aretha sang it in F#min and Lianne sang it in Emin. Because the keys are not the same, we do not see anything in here. POSSIBLE TRANSPOSING BACK TO COMPARE WITH NEW METHODS
 
 ### Conclusion and Discussion
 

@@ -117,3 +117,19 @@ ggplot(old,                         # Set up the plot.
     x = "Valence",
     y = "Energy"
   )
+
+ggplot(all, aes(x = tempo, y = generation, fill = generation)) +
+  geom_density_ridges(
+    aes(point_fill = generation, point_size = valence), 
+    alpha = .6, point_alpha = 0.1, jittered_points = TRUE
+  ) +
+  scale_point_color_hue(l = 40) + scale_point_size_continuous(range = c(0.5, 4)) +
+  scale_discrete_manual(aesthetics = "point_shape", values = c(21, 22, 23))
+
+ggplot(all, aes(x = valence, y = generation, fill = generation)) +
+  geom_density_ridges(
+    aes(point_fill = generation, point_size = valence), 
+    alpha = .6, point_alpha = 0.1, jittered_points = TRUE
+  ) +
+  scale_point_color_hue(l = 40) + scale_point_size_continuous(range = c(0.5, 4)) +
+  scale_discrete_manual(aesthetics = "point_shape", values = c(21, 22, 23))
