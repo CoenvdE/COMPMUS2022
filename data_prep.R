@@ -22,6 +22,8 @@ marvin_gaye <- get_playlist_audio_features("", "37i9dQZF1DZ06evO1VI5MY")
 ray_charles <- get_playlist_audio_features("", "37i9dQZF1DZ06evO0FPX4A")
 aretha_franklin <- get_playlist_audio_features("", "37i9dQZF1DZ06evO4mP172")
 
+heyy
+
 new <- rbind(fkj,tom_misch,lianne_de_havas,jorja_smith,mahalia,joy_crookes)
 new <- new %>%
   add_column(generation = "new")
