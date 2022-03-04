@@ -260,7 +260,7 @@ ggplotly(
 
 Interesting observations
 
-There was also an **outlier**, like *"Hi"* (see old generation overview), in the *This is Mahalia* playlist, Spotify has taken it out during the time I worked on the project. I Think this is a good decision. since it was a *track chat*, a discussion about a track she made, and not an actual song. 
+There was also an **outlier**, like *"Hi"* (see old generation overview), in the *This is Mahalia* playlist, Spotify has taken it out during the time I worked on the project. I Think this is a good decision. since it was a *track chat*, a discussion about a track she made, and not an actual song. In *This is Jorja Smith*, there are also some tracks with a popularity of 0, I am not sure how this can be possible since they where listened to. HOW DOES TRACK POPULARITY WORK?
 
 ### comparing the generations **danceability, valence, tempo and energy**
 
