@@ -21,10 +21,16 @@ library(dplyr)
 library(ggplot2)
 library(plotly)
 library(ggthemes)
+library(ggridges)
 library(viridis)
 library(viridisLite)
 library(forcats)
 library(compmus)
+library(cowplot)
+library(gridExtra)
+library(grid)
+library(ggplot2)
+library(lattice)
 ```
 
 
@@ -74,6 +80,70 @@ theme_ilo <- function(){
 }
 ```  
 
+### **Self-Similarity Matrices** for a song of **Tom Misch & FKJ**
+
+```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
+tom_misch_self_similar <-   
+  get_tidy_audio_analysis("4yMT3mbUsiukLDRqPfQ9rN") %>% # Change URI.
+  compmus_align(bars, segments) %>%                     # Change `bars`
+  select(bars) %>%                                      #   in all three
+  unnest(bars) %>%                                      #   of these lines.
+  mutate(
+    pitches =
+      map(segments,
+        compmus_summarise, pitches,
+        method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  ) %>%
+  mutate(
+    timbre =
+      map(segments,
+        compmus_summarise, timbre,
+        method = "rms", norm = "euclidean"              # Change summary & norm.
+      )
+  )
+
+SS1 <- tom_misch_self_similar %>%
+  compmus_self_similarity(timbre, "cosine") %>% 
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_fixed() +
+  scale_fill_viridis_c(guide = "none") +
+  theme_classic() +
+  labs(x = "", y = "")  + ggtitle("Timbre") + theme_ilo() + theme_tufte()
+
+SS2 <- tom_misch_self_similar %>%
+  compmus_self_similarity(pitches, "cosine") %>% 
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_fixed() +
+  scale_fill_viridis_c(guide = "none") +
+  theme_classic() +
+  labs(x = "", y = "") + ggtitle("chroma") +theme_ilo() + theme_tufte()
+
+grid.arrange(SS1, SS2, ncol = 1)
+
+```
+
+*** 
+
+In the Self-Similarity matrix, the song *Losing my way* from *Tom Misch & FKJ* is analized. As the timbre SS matrix shows, there are different sections in the song that repeat (WHAT SCHEME IS THIS??). As we can see in the chroma SS matrix, different segments of the song have different pitch characteristics. Some repetitions are high in pitch and others are low (QUESTION AS WELL: what does light and dark mean again?? in this SS matrix??????????).
 
 ### Corpus
 
@@ -139,7 +209,7 @@ ggplotly(
 
 ```
 
-*** 
+***
 
 Interesting observations
 
@@ -158,7 +228,7 @@ ggplotly(
       label = track.name           # Labels will be interactively visible.
     )
   ) +
-  geom_point(show_guide=TRUE) +                   # Scatter plot.
+  geom_point(show.legend =TRUE) +                   # Scatter plot.
   geom_rug(size = 0.1) +           # Add 'fringes' to show data distribution.
   facet_wrap(~playlist_name) +           # Separate charts per country.
   scale_x_continuous(              # Fine-tune the x axis.
@@ -192,32 +262,44 @@ Interesting observations
 
 There was also an **outlier**, like *"Hi"* (see old generation overview), in the *This is Mahalia* playlist, Spotify has taken it out during the time I worked on the project. I Think this is a good decision. since it was a *track chat*, a discussion about a track she made, and not an actual song. 
 
-### comparing the generations **valence and tempo**
+### comparing the generations **danceability, valence, tempo and energy**
 
 ```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
-ggplot(all, aes(x=valence , y= tempo, color = generation)) +
-  geom_point(size = 3) +scale_fill_viridis_d() + ylim(45,250)+ 
-  labs(title = "Both Generations", subtitle = "Valence and tempo per generation", colour = "Generation",
-       x = "Valence", y = "Tempo") + theme_tufte() + theme_ilo()
+danceability <- 
+  ggplot(all, aes(x = danceability, y = generation, fill = generation)) +
+  geom_density_ridges(
+    aes(point_fill = generation, point_size = valence), 
+    alpha = .6, point_alpha = 0.1, jittered_points = FALSE
+  ) + theme_tufte() + theme_ilo() + ggtitle("Danceability")
+
+energy <-
+  ggplot(all, aes(x = energy, y = generation, fill = generation)) +
+  geom_density_ridges(
+    aes(point_fill = generation, point_size = valence), 
+    alpha = .6, point_alpha = 0.1, jittered_points = FALSE
+  ) + theme_tufte() + theme_ilo() + ggtitle("Energy")
+
+tempo <- 
+  ggplot(all, aes(x = tempo, y = generation, fill = generation)) +
+  geom_density_ridges(
+    aes(point_fill = generation, point_size = valence), 
+    alpha = .6, point_alpha = 0.1, jittered_points = FALSE
+  ) + theme_tufte() + theme_ilo() + ggtitle("Tempo")
+
+valence <-
+  ggplot(all, aes(x = valence, y = generation, fill = generation)) +
+  geom_density_ridges(
+    aes(point_fill = generation, point_size = valence), 
+    alpha = .6, point_alpha = 0.1, jittered_points = FALSE
+  ) + theme_tufte() + theme_ilo() + ggtitle("Valence")
+
+grid.arrange(danceability, energy, tempo, valence, ncol = 2)
 ```
 
 *** 
 
 As can be seen in the visualization, the *old generation* generally makes songs that are **higher in tempo and valence** then the *new generation*. This was surprising, since this means that the genre does not follow the trend of speeding up its songs.
-
-
-### comparing the generations **danceability and energy**
-
-```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
-ggplot(all, aes(x=energy , y= danceability, color = generation)) +
-  geom_point() + scale_fill_viridis_d() + 
-  labs(title = "Both Generations", subtitle = "energy and danceability per generation", colour = "Generation",
-       x = "Energy", y = "Danceability",) + theme_tufte() + facet_grid( facets = . ~ generation) + theme_ilo()
-```
-
-*** 
-
-As can be seen in the visualization, the *new generation* generally makes songs that have **higher danceability**, but **lower energy** than the *old generation*. I think it is interesting that the **tempo** goes down (as can be seen in the comparison of **tempo and valence**), but the **danceability** goes up. This could imply that songs are getting **groovier**.
+Besides that, the *new generation* generally makes songs that have **higher danceability**, but **lower energy** than the *old generation*. I think it is interesting that the **tempo** goes down (as can be seen in the comparison of **tempo and valence**), but the **danceability** goes up. This could imply that songs are getting **groovier**.
 
 
 ### **chromogram** of an interesting soul track
@@ -251,9 +333,9 @@ sunny %>%
 
 I decided to visualize the song *"Sunny"* by *Bobby Hebbs*.
 This is not an artist from my corpus, but I think he deserves a honerable mention as he is a big inspiration to me personally and has influenced soul a lot.  I really wanted to visualize this song, because it **transposes** a few times. As seen in the chromogram, the song starts in *Emin* transposes to *Fmin*, *F#min* and ends in *Gmin*.
-I think this song is very interesting to see in the chromogram, as you can "see the transposing happen".
+I think this song is very interesting to see in the chromogram, as you can "see the transposing happen". "multiple levels of detail for an important outlier (or centre point) in your corpus." IS THIS SOOOOOOOO??????????
 
-### comparing *say a little prayer* from the old generation with a cover of the new generation with **Dynamic time wraping**
+### comparing an original song from the old generation with a cover of the new generation with **Dynamic time wraping**
 
 ```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
 
@@ -293,7 +375,7 @@ compmus_long_distance(
 
 *** 
 
-In the dynamic time warping graph, *Say a little prayer* by *Aretha Franklin* is compared to the *cover* of *Lianne de Havas*. As we can see in the visualization there is no line that shows similarities. This is because Aretha sang it in F#min and Lianne sang it in Emin. Because the keys are not the same, we do not see anything in here. POSSIBLE TRANSPOSING BACK TO COMPARE WITH NEW METHODS
+In the dynamic time warping graph, *Say a little prayer* by *Aretha Franklin* is compared to the *cover* of *Lianne de Havas*. As we can see in the visualization there is no line that shows similarities. This is because *Aretha* sang it in F#min and *Lianne* sang it in Emin. Because the keys are not the same, we do not see anything in here. POSSIBLE TRANSPOSING BACK TO COMPARE WITH NEW METHODS NOG OP TERUG KOMEN EN DAT T INTERESITNG IS WITH COVER
 
 ### Conclusion and Discussion
 

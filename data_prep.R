@@ -7,6 +7,11 @@ library(viridis)
 library(viridisLite)
 library(ggridges)
 library(plotly)
+library(cowplot)
+library(gridExtra)
+library(grid)
+library(ggplot2)
+library(lattice)
 
 fkj <- get_playlist_audio_features("", "37i9dQZF1DZ06evO1x7AE9")
 tom_misch <- get_playlist_audio_features("", "37i9dQZF1DZ06evO0P3UNG")
@@ -118,7 +123,9 @@ ggplot(old,                         # Set up the plot.
     y = "Energy"
   )
 
-ggplot(all, aes(x = tempo, y = generation, fill = generation)) +
+
+tempo <- 
+  ggplot(all, aes(x = tempo, y = generation, fill = generation)) +
   geom_density_ridges(
     aes(point_fill = generation, point_size = valence), 
     alpha = .6, point_alpha = 0.1, jittered_points = TRUE
@@ -126,10 +133,14 @@ ggplot(all, aes(x = tempo, y = generation, fill = generation)) +
   scale_point_color_hue(l = 40) + scale_point_size_continuous(range = c(0.5, 4)) +
   scale_discrete_manual(aesthetics = "point_shape", values = c(21, 22, 23))
 
-ggplot(all, aes(x = valence, y = generation, fill = generation)) +
+valence <-
+  ggplot(all, aes(x = valence, y = generation, fill = generation)) +
   geom_density_ridges(
     aes(point_fill = generation, point_size = valence), 
     alpha = .6, point_alpha = 0.1, jittered_points = TRUE
   ) +
   scale_point_color_hue(l = 40) + scale_point_size_continuous(range = c(0.5, 4)) +
   scale_discrete_manual(aesthetics = "point_shape", values = c(21, 22, 23))
+
+grid.arrange(tempo, valence)
+
