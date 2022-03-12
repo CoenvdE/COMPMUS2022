@@ -198,7 +198,7 @@ key_templates <-
   )
 
 sunny10 <-
-  get_tidy_audio_analysis("4vju55Ag7apDL2CfotuE7Q") %>%
+  get_tidy_audio_analysis("6IFSPx3lqkw0ri4OJkTkLl") %>%
   compmus_align(sections, segments) %>%
   select(sections) %>%
   unnest(sections) %>%
@@ -257,7 +257,7 @@ do this for outliers or archetypes HOW WHAT WHY??????
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4vju55Ag7apDL2CfotuE7Q?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
 
-### Next level comparison
+### low level comparison between the generations
 
 
 ```{r}
@@ -327,14 +327,18 @@ genplt2 <-
   scale_fill_viridis_d() +
   labs(x = "Spotify Timbre Coefficients", y = "", fill = "Generation")
 
-genplt1
+
 genplt2
+genplt1
 
 ```
 
 ***
+As we can see, most timbre coefficients do not differ a lot between the generations, exept 2 and 4. This could mean that the feel of the tracks do not have changed a lot. This could be explained by presenting the same genre.
 
-DESCRIPTION HOEZO KUNNEN ZE NIET IN DE GRID ARRANGE
+OTHER PLOT TO BE EXPLAINED
+
+HOEZO KUNNEN ZE NIET IN DE GRID ARRANGE SAMEN
 grid.arrange(genplt1, genplt2, ncols = 2)
 
 ### **Self-Similarity Matrices** for a song of **Tom Misch & FKJ**
@@ -400,12 +404,9 @@ grid.arrange(SS1, SS2, ncol = 1)
 
 *** 
 
-In the Self-Similarity matrix, the song *Losing my way* from *Tom Misch & FKJ* is analized. As the timbre SS matrix shows, there are different sections in the song that repeat (WHAT SCHEME IS THIS??). As we can see in the chroma SS matrix, different segments of the song have different pitch characteristics. Some repetitions are high in pitch and others are low (QUESTION AS WELL: what does light and dark mean again?? in this SS matrix??????????).
+In the Self-Similarity matrix, the song *Losing my way* from *Tom Misch & FKJ* is analized. First we analize via a timbre SSM. Timbre can be described as the feel of a track, and what different instruments are used, but the term is hard to describe. As the timbre SS matrix shows, there are different sections in the song that repeated. The sections are as A - B - C - mix between BC - D. As we can see in the chroma SS matrix, different segments of the song have different pitch characteristics. Some repetitions are high in pitch and others are low. light means the pitch characteristics are way different there then in the rest of the song. This is the same for the end. the rest of the pattern follows the sections, as explained above.
 
-timre is feel of a track
-timbre diffferent insturmnetns
-
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4yMT3mbUsiukLDRqPfQ9rN?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4yMT3mbUsiukLDRqPfQ9rN?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
 
 ### Corpus
@@ -478,6 +479,11 @@ Interesting observations
 
 What is interesting to see is that there is one **outlier**, a song of *Erykah Badu*. This one is called *"Hi"*, which is not a full song, but definitely music, it is in the *"This is Erykah Badu"* playlist. This song has **no  valence and tempo** stats, they are set to 0. Another interesting point is that 1 song of *Bill Withers*,*Dont want you on my mind*, has a **very high tempo** (240-250).
 
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO4mP172?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO4zhZAI?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+
 ### Overview of the **new generation**
 
 ```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
@@ -527,17 +533,17 @@ There was also an **outlier**, like *"Hi"* (see old generation overview), in the
 
 Playlists
 
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO0AHQ3T?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO0AHQ3T?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO1x7AE9?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO1x7AE9?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO0P3UNG?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO0P3UNG?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX1ykpeqTwA5m?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX1ykpeqTwA5m?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO3w1CV3?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO3w1CV3?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO1EwgdW?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO1EwgdW?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
 
 ### comparing the generations **danceability, valence, tempo and energy**
@@ -622,9 +628,9 @@ compmus_long_distance(
 
 In the dynamic time warping graph, *Say a little prayer* by *Aretha Franklin* is compared to the *cover* of *Lianne de Havas*. As we can see in the visualization there is no line that shows similarities. This is because *Aretha* sang it in F#min and *Lianne* sang it in Emin. Because the keys are not the same, we do not see anything in here. POSSIBLE TRANSPOSING BACK TO COMPARE WITH NEW METHODS NOG OP TERUG KOMEN EN DAT T INTERESITNG IS WITH COVER
 
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3NfxSdJnVdon1axzloJgba?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3NfxSdJnVdon1axzloJgba?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1ZczOoLuCyDO5dKUPndxf5?utm_source=generator" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1ZczOoLuCyDO5dKUPndxf5?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
 
 
