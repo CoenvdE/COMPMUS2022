@@ -80,7 +80,38 @@ theme_ilo <- function(){
 }
 ```  
 
-### **chromogram, keyogram and chordogram** of an interesting soul track 
+### Taking a look at the **tempo** of the tempo-outlier in the old generation
+
+```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
+tempo_outlier <-
+  get_tidy_audio_analysis("3BaFRtmUWO1Z3gzc9zYRh2")
+
+outlier_graph1 <-
+  tempo_outlier %>%
+  tempogram(window_size = 8, hop_size = 1, cyclic = TRUE) %>%
+  ggplot(aes(x = time, y = bpm, fill = power)) +
+  geom_raster() +
+  scale_fill_viridis_c(guide = "none") +
+  labs(x = "Time (s)", y = "Tempo (BPM)") +
+  theme_classic()
+
+outlier_graph2 <-
+  tempo_outlier %>%
+  tempogram(window_size = 8, hop_size = 1, cyclic = FALSE) %>%
+  ggplot(aes(x = time, y = bpm, fill = power)) +
+  geom_raster() +
+  scale_fill_viridis_c(guide = "none") +
+  labs(x = "Time (s)", y = "Tempo (BPM)") +
+  theme_classic()
+
+grid.arrange(outlier_graph1, outlier_graph2, ncol = 2)
+```  
+
+***
+
+For the explanation of the tempo outlier, 2 tempograms were created. One cyclic and one normal, to see how the tempo would be analyzed. As we can see in the non-cyclic graph, we can see the brightest line around the tempo of 220-250 bpm. In the non-cyclic graph, we can see the brightest line is is around 120 bpm. This is the actual bpm. Spotify measures the tempo to high, a tempo octave to high even maybe. MEASURE IN ENERGY OR SPECTOGRAM, ENERGY = LOUDNESS
+
+### **chromogram, keyogram and chordogram** of an interesting soul track**
 
 ```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
 
@@ -120,7 +151,6 @@ minor_chord <-
 seventh_chord <-
   c(   1,    0,    0,    0,    1,    0,    0,    1,    0,    0,    1,    0)
 
-# CHANGE DEZE NUMBERS NOG NAAR NIEUWEE SHIT!!!!!!!!!!!!!!!!!!!!!!!!! VAN PAPER
 major_key <-
   c(6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88)
 minor_key <-
@@ -240,7 +270,8 @@ sunny2 <-
   theme_minimal() +
   labs(x = "Time (s)", y = "")
 
-grid.arrange(sunny1, sunny, sunny2, ncol = 2, widths = 1:2)
+#grid.arrange(sunny1, sunny, sunny2, ncol = 2, widths = 1:2)
+grid.arrange(sunny1, sunny2, ncol = 2, widths = 1:2)
 ```
 
 ***
@@ -249,99 +280,13 @@ I decided to visualize the song *"Sunny"* by *Marvin gaye* (the original is from
 I really wanted to visualize this song, because it is a great song in itself **transposes** a few times. As seen in the chromogram, the song starts in *Fmin* transposes to *F#min*, *Gmin* and ends in *G#min*. We can see this in our keyogram and chordogram visualized as well.
 I think this song is very interesting to see in the visualization, as you can "see the transposing happen". 
 
-
-*- POINTS TO BE INCORPORATED*
-"multiple levels of detail for an important outlier (or centre point) in your corpus."HOW WHAT WHY???????????
-do this for outliers or archetypes HOW WHAT WHY??????
-
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/6IFSPx3lqkw0ri4OJkTkLl?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4vju55Ag7apDL2CfotuE7Q?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
-
-### low level comparison between the generations
-
-
-```{r}
-old_gen_comp <-
-  old %>%
-  slice(1:30) %>%
-  add_audio_analysis()
-
-
-new_gen_comp <-
-  new %>%
-  slice(1:30) %>%
-  add_audio_analysis()
-
-all_gen_comp <-
-  old_gen_comp %>%
-  mutate(generation = "old") %>%
-  bind_rows(new_gen_comp %>% mutate(generation = "new"))
-
-genplt1 <-
-  all_gen_comp %>%
-  mutate(
-    sections =
-      map(
-        sections,                                    # sections or segments
-        summarise_at,
-        vars(tempo, loudness, duration),             # features of interest
-        list(section_mean = mean, section_sd = sd)   # aggregation functions
-      )
-  ) %>%
-  unnest(sections) %>%
-  ggplot(
-    aes(
-      x = tempo,
-      y = tempo_section_sd,
-      colour = generation,
-      alpha = loudness
-    )
-  ) +
-  geom_point(aes(size = duration / 60)) +
-  geom_rug() +
-  theme_minimal() +
-  ylim(0, 5) +
-  labs(
-    x = "Mean Tempo (bpm)",
-    y = "SD Tempo",
-    colour = "Generation",
-    size = "Duration (min)",
-    alpha = "Volume (dBFS)"
-  )
-
-genplt2 <-
-  all_gen_comp %>%
-  mutate(
-    timbre =
-      map(
-        segments,
-        compmus_summarise,
-        timbre,
-        method = "mean"
-      )
-  ) %>%
-  select(generation, timbre) %>%
-  compmus_gather_timbre() %>%
-  ggplot(aes(x = basis, y = value, fill = generation)) +
-  geom_violin() +
-  scale_fill_viridis_d() +
-  labs(x = "Spotify Timbre Coefficients", y = "", fill = "Generation")
-
-
-genplt2
-genplt1
-
-```
-
 ***
 As we can see, most timbre coefficients do not differ a lot between the generations, exept 2 and 4. This could mean that the feel of the tracks do not have changed a lot. This could be explained by presenting the same genre.
 
-OTHER PLOT TO BE EXPLAINED
-
-HOEZO KUNNEN ZE NIET IN DE GRID ARRANGE SAMEN
-grid.arrange(genplt1, genplt2, ncols = 2)
 
 ### Corpus
 
@@ -474,7 +419,7 @@ In the graphs, the new generation data is visualized. Energy, valence, danceabil
 
 Interesting observations
 
-There was also an **outlier**, like *"Hi"* (see old generation overview), in the *This is Mahalia* playlist, Spotify has taken it out during the time I worked on the project. I Think this was a good decision, since it was a *track chat*, a discussion about a track she made, and not an actual song. I wanted to mention this, as it is possible for spotify to put it back in, and in case that happens, I want to be able to explain it. In *This is Jorja Smith*, there are also some tracks with a popularity of 0, I am not sure how this can be possible since they where listened to and it is unclear how spotify determines the popularity of a track. HELPPPPP HOW DETERMINE POPULARITY?????????
+There was also an **outlier**, like *"Hi"* (see old generation overview), in the *This is Mahalia* playlist, Spotify has taken it out during the time I worked on the project. I Think this was a good decision, since it was a *track chat*, a discussion about a track she made, and not an actual song. I wanted to mention this, as it is possible for spotify to put it back in, and in case that happens, I want to be able to explain it. In *This is Jorja Smith*, there are also some tracks with a popularity of 0, I am not sure how this can be possible since they where listened to and it is unclear how spotify determines the popularity of a track.
 
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO0AHQ3T?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
@@ -528,6 +473,158 @@ grid.arrange(danceability, energy, tempo, valence, ncol = 2)
 To see how the generations compare, some major characteristics are shown in graphs. As can be seen in the visualization, the *old generation* generally makes songs that are **higher in tempo and valence** then the *new generation*. This was surprising, since this means that the genre does not follow the trend of speeding up its songs.
 Besides that, the *new generation* generally makes songs that have **higher danceability**, but **lower energy** than the *old generation*. I think it is interesting that the **tempo** goes down (as can be seen in the comparison of **tempo and valence**), but the **danceability** goes up. This could imply that songs are getting **groovier**.
 
+### low level comparison between the generations (1)
+
+```{r}
+old_gen_comp <-
+  old %>%
+  slice(1:30) %>%
+  add_audio_analysis()
+
+
+new_gen_comp <-
+  new %>%
+  slice(1:30) %>%
+  add_audio_analysis()
+
+all_gen_comp <-
+  old_gen_comp %>%
+  mutate(generation = "old") %>%
+  bind_rows(new_gen_comp %>% mutate(generation = "new"))
+
+genplt1 <-
+  all_gen_comp %>%
+  mutate(
+    sections =
+      map(
+        sections,                                    # sections or segments
+        summarise_at,
+        vars(tempo, loudness, duration),             # features of interest
+        list(section_mean = mean, section_sd = sd)   # aggregation functions
+      )
+  ) %>%
+  unnest(sections) %>%
+  ggplot(
+    aes(
+      x = tempo,
+      y = tempo_section_sd,
+      colour = generation,
+      alpha = loudness
+    )
+  ) +
+  geom_point(aes(size = duration / 60)) +
+  geom_rug() +
+  theme_minimal() +
+  ylim(0, 5) +
+  labs(
+    x = "Mean Tempo (bpm)",
+    y = "SD Tempo",
+    colour = "Generation",
+    size = "Duration (min)",
+    alpha = "Volume (dBFS)"
+  )
+
+genplt2 <-
+  all_gen_comp %>%
+  mutate(
+    timbre =
+      map(
+        segments,
+        compmus_summarise,
+        timbre,
+        method = "mean"
+      )
+  ) %>%
+  select(generation, timbre) %>%
+  compmus_gather_timbre() %>%
+  ggplot(aes(x = basis, y = value, fill = generation)) +
+  geom_violin() +
+  scale_fill_viridis_d() +
+  labs(x = "Spotify Timbre Coefficients", y = "", fill = "Generation")
+
+genplt1
+
+```
+
+***
+As we can see, most timbre coefficients do not differ a lot between the generations, exept 2 and 4. This could mean that the feel of the tracks do not have changed a lot. This could be explained by presenting the same genre.
+
+### low level comparison between the generations (2)
+
+```{r}
+old_gen_comp <-
+  old %>%
+  slice(1:30) %>%
+  add_audio_analysis()
+
+
+new_gen_comp <-
+  new %>%
+  slice(1:30) %>%
+  add_audio_analysis()
+
+all_gen_comp <-
+  old_gen_comp %>%
+  mutate(generation = "old") %>%
+  bind_rows(new_gen_comp %>% mutate(generation = "new"))
+
+genplt1 <-
+  all_gen_comp %>%
+  mutate(
+    sections =
+      map(
+        sections,                                    # sections or segments
+        summarise_at,
+        vars(tempo, loudness, duration),             # features of interest
+        list(section_mean = mean, section_sd = sd)   # aggregation functions
+      )
+  ) %>%
+  unnest(sections) %>%
+  ggplot(
+    aes(
+      x = tempo,
+      y = tempo_section_sd,
+      colour = generation,
+      alpha = loudness
+    )
+  ) +
+  geom_point(aes(size = duration / 60)) +
+  geom_rug() +
+  theme_minimal() +
+  ylim(0, 5) +
+  labs(
+    x = "Mean Tempo (bpm)",
+    y = "SD Tempo",
+    colour = "Generation",
+    size = "Duration (min)",
+    alpha = "Volume (dBFS)"
+  )
+
+genplt2 <-
+  all_gen_comp %>%
+  mutate(
+    timbre =
+      map(
+        segments,
+        compmus_summarise,
+        timbre,
+        method = "mean"
+      )
+  ) %>%
+  select(generation, timbre) %>%
+  compmus_gather_timbre() %>%
+  ggplot(aes(x = basis, y = value, fill = generation)) +
+  geom_violin() +
+  scale_fill_viridis_d() +
+  labs(x = "Spotify Timbre Coefficients", y = "", fill = "Generation")
+
+
+genplt2
+
+```
+
+***
+As we can see, most timbre coefficients do not differ a lot between the generations, exept 2 and 4. This could mean that the feel of the tracks do not have changed a lot. This could be explained by presenting the same genre.
 
 ### comparing an original song from the old generation with a cover of the new generation with **Dynamic time wraping**
 
@@ -616,7 +713,7 @@ SS1 <- tom_misch_self_similar %>%
   coord_fixed() +
   scale_fill_viridis_c(guide = "none") +
   theme_classic() +
-  labs(x = "", y = "")  + ggtitle("Timbre") + theme_ilo() + theme_tufte()
+  labs(x = "", y = "")  + ggtitle("Timbre of \"losing my way\" - sections") + theme_ilo() + theme_tufte()
 
 SS2 <- tom_misch_self_similar %>%
   compmus_self_similarity(pitches, "cosine") %>% 
@@ -633,7 +730,7 @@ SS2 <- tom_misch_self_similar %>%
   coord_fixed() +
   scale_fill_viridis_c(guide = "none") +
   theme_classic() +
-  labs(x = "", y = "") + ggtitle("chroma") +theme_ilo() + theme_tufte()
+  labs(x = "", y = "") + ggtitle("chroma of \"losing my way\" - sections") +theme_ilo() + theme_tufte()
 
 grid.arrange(SS1, SS2, ncol = 1)
 
