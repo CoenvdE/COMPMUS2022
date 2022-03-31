@@ -4,6 +4,7 @@ library(ggdendro)
 library(heatmaply)
 library(spotifyr)
 library(compmus)
+library(dendextend)
 
 fkj <- get_playlist_audio_features("", "37i9dQZF1DZ06evO1x7AE9")
 tom_misch <- get_playlist_audio_features("", "37i9dQZF1DZ06evO0P3UNG")
@@ -81,8 +82,7 @@ fkj_juice <-
       instrumentalness +
       valence +
       tempo +
-      c01 + c02 + c03 + c04 + c05 + c06 +
-      c07 + c08 + c09 + c10 + c11 + c12,
+      c02 + c04,
     data = fkj
   ) %>%
   step_center(all_predictors()) %>%
@@ -95,10 +95,20 @@ fkj_juice <-
 
 fkj_dist <- dist(fkj_juice, method = "euclidean")
 
+hc_ye <- hclust(fkj_dist, method = "complete")
+dend <- as.dendrogram(hc_ye)
+par(mfrow = c(1,2))
+dend <- dend %>%
+  color_branches(k = 10) %>%
+  set("branches_lwd", c(2))
+dend <- color_labels(dend, k = 10)
+plot(dend)
+
+
 fkj_dist %>% 
   hclust(method = "complete") %>% # Try single, average, and complete.
   dendro_data() %>%
-  ggdendrogram()
+  ggdendrogram(scale.color = cols)
 
 
 heatmaply(
