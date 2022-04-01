@@ -5,6 +5,7 @@ library(heatmaply)
 library(spotifyr)
 library(compmus)
 library(dendextend)
+library(pvclust)
 
 fkj <- get_playlist_audio_features("", "37i9dQZF1DZ06evO1x7AE9")
 tom_misch <- get_playlist_audio_features("", "37i9dQZF1DZ06evO0P3UNG")
@@ -30,8 +31,6 @@ old <- old %>%
 
 all <- rbind(old, new)
 
-artists_all <- all %>% group_by(track.artists)
-
 # set up classification
 get_conf_mat <- function(fit) {
   outcome <- .get_tune_outcome_names(fit)
@@ -50,8 +49,8 @@ get_pr <- function(fit) {
 }  
 
 # set up playlist
-fkj <-
-  get_playlist_audio_features("", "37i9dQZF1DZ06evO1x7AE9") %>%
+artists_all <-
+  all%>%
   add_audio_analysis() %>%
   mutate(
     segments = map2(segments, key, compmus_c_transpose),
@@ -71,10 +70,14 @@ fkj <-
   mutate_at(vars(pitches, timbre), map, bind_rows) %>%
   unnest(cols = c(pitches, timbre))
 
+artists_all_filter <- artists_all %>% group_by(playlist_name) %>%
+  summarise_at(vars(danceability, energy, speechiness, acousticness, instrumentalness, valence, tempo, c04, c02), mean)
 
-fkj_juice <-
+
+
+artists_all_filter_juice <-
   recipe(
-    track.name ~ #track artist RECAST AS FACTOR EN DAN <- factor(list, levels = c("name goeie orders moet precies"))
+    playlist_name ~ #track artist RECAST AS FACTOR EN DAN <- factor(list, levels = c("name goeie orders moet precies"))
       danceability +
       energy +
       speechiness +
@@ -83,25 +86,25 @@ fkj_juice <-
       valence +
       tempo +
       c02 + c04,
-    data = fkj
+    data = artists_all_filter
   ) %>%
   step_center(all_predictors()) %>%
   step_scale(all_predictors()) %>% 
   # step_range(all_predictors()) %>% 
-  prep(fkj %>% mutate(track.name = str_trunc(track.name, 20))) %>%
+  prep(artists_all_filter %>% mutate(playlist_name = substring(playlist_name, 8))) %>%
   juice() %>%
-  column_to_rownames("track.name")
+  column_to_rownames("playlist_name")
 
 
-fkj_dist <- dist(fkj_juice, method = "euclidean")
+artists_all_filter_dist <- dist(artists_all_filter_juice, method = "euclidean")
 
-hc_ye <- hclust(fkj_dist, method = "complete")
-dend <- as.dendrogram(hc_ye)
-par(mfrow = c(1,2))
+hc_all <- hclust(artists_all_filter_dist, method = "average")
+dend <- as.dendrogram(hc_all)
 dend <- dend %>%
-  color_branches(k = 10) %>%
+  color_branches(k = 12) %>%
   set("branches_lwd", c(2))
-dend <- color_labels(dend, k = 10)
+  par(mfrow = c(1,1))
+dend <- color_labels(dend, k = 12)
 plot(dend)
 
 
