@@ -83,7 +83,363 @@ theme_ilo <- function(){
 }
 ```  
 
-### Clustering 
+### **Corpus**
+
+**Research Question**
+
+*How has the soul changed over time?*
+
+**Motivation**
+
+For my project, I wanted to research soul music. I am a musician myself, I make soul/jazz/funk/RnB. I am curious how the soul music I listen and make everyday came to be 
+and how the genre may differ between earlier and later generations. This is why I decided to see how big soul artists through the years compare to eachother. To decide what artists I should include, I made a mix of artists that inspire me, 
+artists that have meant a lot for the genre in the perspective of my guitar teacher (who finished his jazz conservatory master) and artists that made the top according to the internet (see source below). These are the artists per generation:
+
+- **Old Generation**: Erykah Badu, Steve Wonder, Bill Withers, Marvin Gaye, Ray charles, Aretha Franklin.
+
+- **new generation**: Tom Misch, Lianne De Havas, FKJ, Joy Crookes, Jorja Smith, Mahalia.
+
+My guitar teacher, me, and the sources mentioned earlier, think these artists really represent the genre in their time and think it is a good representation of what I want to research. I do think more many names could be added, such as **Bobby Hebbs**, but I don’t think this would be of use. 
+
+**Hypotheses**
+
+I suspect the most difference will be seen in tempo and time, as most songs have been going faster and getting shorter through the years.
+The tracks of all these artists will be compared, I think Bill Withers is the most atypical, because he does a lot of genres besides soul alone (like blues etc.)
+
+
+*Source*: https://www.rollingstone.com/music/music-lists/rolling-stone-readers-pick-the-top-10-rb-soul-singers-of-all-time-16607/
+
+### Overview of the **new generation**
+
+```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
+ggplotly(
+  ggplot(new,                         # Set up the plot.
+    aes(
+      x = valence,
+      y = energy,
+      size = track.popularity,
+      colour = danceability,
+      label = track.name           # Labels will be interactively visible.
+    )  
+  ) + theme_ilo() + theme_tufte() +
+  geom_point(show.legend =TRUE) +                   # Scatter plot.
+  geom_rug(size = 0.1) +           # Add 'fringes' to show data distribution.
+  facet_wrap(~playlist_name) +           # Separate charts per country.
+  scale_x_continuous(              # Fine-tune the x axis.
+    limits = c(0, 1),
+    breaks = c(0, 0.50, 1),        # Use grid-lines for quadrants only.
+    minor_breaks = NULL            # Remove 'minor' grid-lines.
+  ) +
+  scale_y_continuous(              # Fine-tune the y axis in the same way.
+    limits = c(0, 1),
+    breaks = c(0, 0.50, 1),
+    minor_breaks = NULL
+  ) +
+  scale_colour_viridis_c(          # Use the cividis palette
+    option = "E",                  # Qualitative set.
+    alpha = 0.8,                   # Include some transparency
+  ) +
+  scale_size_continuous(           # Fine-tune the sizes of each point.
+  guide = "legend") +
+  theme_light() +                  # Use a simpler theme.
+  labs(                            # Make the titles nice.
+    x = "Valence",
+    y = "Energy"
+  )
+)
+
+```
+
+*** 
+
+In the graphs, the new generation data is visualized. Energy, valence, danceability and popularity are displayed per track of every playlist/artist used for this generation. 
+
+**Interesting observations**
+
+There was an **outlier** *"Silly Girl - Track Chat*, in the *This is Mahalia* playlist. This song had **no valence and danceability** stats, they are set to 0. Spotify has taken it out during the time I worked on the project. I Think this was a good decision, since it was a *track chat*, a discussion about a track she made, and not an actual song. I wanted to mention this, as it is possible for Spotify to put it back in, and in case that happens, I want to be able to explain it. Besides the outlier, there are some tracks in *This is Jorja Smith* playlist with a **popularity** of 0, I am not sure how this can be possible since they where listened to and it is unclear how Spotify determines the popularity of a track.
+
+***
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO0AHQ3T?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO1x7AE9?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO0P3UNG?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX1ykpeqTwA5m?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO3w1CV3?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO1EwgdW?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+### Overview of the **old generation**
+
+```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
+ggplotly(
+  ggplot(old,                         # Set up the plot.
+    aes(
+      x = valence,
+      y = energy,
+      size = track.popularity,
+      colour = danceability,
+      label = track.name           # Labels will be interactively visible.
+    )
+  ) + theme_ilo() + theme_tufte() +
+  geom_point(show.legend = TRUE) +                   # Scatter plot.
+  geom_rug(size = 0.1) +           # Add 'fringes' to show data distribution.
+  facet_wrap(~playlist_name) +           # Separate charts per country.
+  scale_x_continuous(              # Fine-tune the x axis.
+    limits = c(0, 1),
+    breaks = c(0, 0.50, 1),        # Use grid-lines for quadrants only.
+    minor_breaks = NULL            # Remove 'minor' grid-lines.
+  ) +
+  scale_y_continuous(              # Fine-tune the y axis in the same way.
+    limits = c(0, 1),
+    breaks = c(0, 0.50, 1),
+    minor_breaks = NULL
+  ) +
+  scale_colour_viridis_c(          # Use the cividis palette
+    option = "E",                  # Qualitative set.
+    alpha = 0.8,                   # Include some transparency
+  ) +
+  scale_size_continuous(           # Fine-tune the sizes of each point.
+  guide = "legend") +
+  theme_light() +                  # Use a simpler theme.
+  labs(                            # Make the titles nice.
+    x = "Valence",
+    y = "Energy"
+  )
+)
+
+```
+
+***
+
+In the graphs, the old generation data is visualized. Energy, valence, danceability and popularity are displayed per track of every playlist/artist used for this generation. 
+
+**Interesting observations**
+
+What is interesting to see is that there is one **outlier**, a song of *Erykah Badu*. This one is called *"Hi"*, which is not a "regular" song, but definitely music. It is in the *"This is Erykah Badu"* playlist. This song has **no  valence and danceability** stats, they are set to 0. Because of the Another interesting **outlier** is that a song of *Bill Withers, "I Don't Want You On My Mind"*, which has a **very high tempo** (240-250).
+
+*** 
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO4mP172?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO4zhZAI?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO0FPX4A?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX5MwHlrzAPLQ?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO1VI5MY?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO4iAGsg?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+### Taking a look at the **tempo** of the **tempo-outlier** in the old generation
+
+```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
+tempo_outlier <-
+  get_tidy_audio_analysis("3BaFRtmUWO1Z3gzc9zYRh2")
+
+outlier_graph1 <-
+  tempo_outlier %>%
+  tempogram(window_size = 8, hop_size = 1, cyclic = TRUE) %>%
+  ggplot(aes(x = time, y = bpm, fill = power)) +
+  geom_raster() +
+  scale_fill_viridis_c(guide = "none") +
+  labs(x = "Time (s)", y = "Tempo (BPM)") +
+  ggtitle("Cyclic tempogram of the outlier", subtitle = "Bill Withers, I Don't Want You On My Mind") +
+  theme_ilo() + theme_tufte()
+
+outlier_graph2 <-
+  tempo_outlier %>%
+  tempogram(window_size = 8, hop_size = 1, cyclic = FALSE) %>%
+  ggplot(aes(x = time, y = bpm, fill = power)) +
+  geom_raster() +
+  scale_fill_viridis_c(guide = "none") +
+  labs(x = "Time (s)", y = "Tempo (BPM)") + 
+  ggtitle("Regular tempogram of the outlier", subtitle = "Bill Withers, I Don't Want You On My Mind") +
+  theme_ilo() + theme_tufte()
+
+grid.arrange(outlier_graph1, outlier_graph2, ncol = 2)
+```
+
+***
+
+The **outlier** song of *Bill Withers, "I Don't Want You On My Mind"* has a **very high tempo** (240-250). I wanted to see how this can be possible, since it is extraordinary to have a track with such high bpm.
+For the explanation of the tempo outlier, 2 tempograms were created. A cyclic tempogram (left) and a regular tempogram (right) visualize how tempo would be analyzed. As we can see in the non-cyclic graph, the brightest line around the tempo of 220-250 bpm. In the non-cyclic graph, we can see the brightest line is is around 120 bpm. This is the actual bpm. Spotify measures the tempo to high, a tempo octave to high actually. 
+
+***
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3BaFRtmUWO1Z3gzc9zYRh2?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+### Comparing the generations **danceability, valence, tempo and energy**
+
+```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
+danceability <- 
+  ggplot(all, aes(x = danceability, y = generation, fill = generation)) +
+  geom_density_ridges(
+    aes(point_fill = generation, point_size = valence), 
+    alpha = .6, point_alpha = 0.1, jittered_points = FALSE
+  ) + theme_tufte() + theme_ilo() + ggtitle("Danceability")
+
+energy <-
+  ggplot(all, aes(x = energy, y = generation, fill = generation)) +
+  geom_density_ridges(
+    aes(point_fill = generation, point_size = valence), 
+    alpha = .6, point_alpha = 0.1, jittered_points = FALSE
+  ) + theme_tufte() + theme_ilo() + ggtitle("Energy")
+
+tempo <- 
+  ggplot(all, aes(x = tempo, y = generation, fill = generation)) +
+  geom_density_ridges(
+    aes(point_fill = generation, point_size = valence), 
+    alpha = .6, point_alpha = 0.1, jittered_points = FALSE
+  ) + theme_tufte() + theme_ilo() + ggtitle("Tempo")
+
+valence <-
+  ggplot(all, aes(x = valence, y = generation, fill = generation)) +
+  geom_density_ridges(
+    aes(point_fill = generation, point_size = valence), 
+    alpha = .6, point_alpha = 0.1, jittered_points = FALSE
+  ) + theme_tufte() + theme_ilo() + ggtitle("Valence")
+
+grid.arrange(danceability, energy, tempo, valence, ncol = 2)
+```
+
+*** 
+
+To see how the generations compare, some major characteristics are shown in graphs. As can be seen in the visualization, the *old generation* generally makes songs that are **higher in tempo and valence** then the *new generation*. This was surprising, since this means that the genre does not follow the trend of speeding up its songs.
+Besides that, the *new generation* generally makes songs that have **higher danceability**, but **lower energy** than the *old generation*. I think it is interesting that the **tempo** goes down, but the **danceability** goes up. This could imply that songs are getting **groovier**.
+
+### Low level **Timbre coefficients** comparison between the generations
+
+```{r}
+
+new <- rbind(fkj,tom_misch,lianne_de_havas,jorja_smith,mahalia,joy_crookes)
+new <- new %>%
+  add_column(generation = "new")
+
+old <- rbind(erykah_badu,steve_wonder,bill_withers,marvin_gaye,ray_charles,aretha_franklin)
+old <- old %>%
+  add_column(generation = "old")
+
+all <- rbind(old, new)
+old_gen_comp <-
+  old %>%
+  slice(1:30) %>%
+  add_audio_analysis()
+
+new_gen_comp <-
+  new %>%
+  slice(1:30) %>%
+  add_audio_analysis()
+
+all_gen_comp <-
+  old_gen_comp %>%
+  mutate(generation = "old") %>%
+  bind_rows(new_gen_comp %>% mutate(generation = "new"))
+
+genplt <-
+  all_gen_comp %>%
+  mutate(
+    timbre =
+      map(
+        segments,
+        compmus_summarise,
+        timbre,
+        method = "mean"
+      )
+  ) %>%
+  select(generation, timbre) %>%
+  compmus_gather_timbre() %>%
+  ggplot(aes(x = basis, y = value, fill = generation)) +
+  geom_violin() +
+  scale_fill_viridis_d() +
+  labs(x = "Spotify Timbre Coefficients", y = "", fill = "Generation", 
+       title = "Comparison of Spotify Timbre coefficients") +
+  theme_ilo() + theme_tufte()
+
+
+genplt
+
+```
+
+***
+
+Timbre is can be described as the *feel* of a track, or in this case a generation. While the term is hard to describe, this can be a nice way of summarizing what it means. Because it is interesting to see if the *feel* of the generations has changed, lower level timbre coefficients are compared. 
+As we can see, most timbre coefficients do not differ a lot between the generations, except 2 and 4. This could mean that the feel of the tracks do not have changed a lot in general, but that there are some slight differences. This could be explained by the fact that the tracks are of the same genre, thus all having a similar *soul* feeling.
+
+### Comparing an original with a cover with **Dynamic time warping**
+
+```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
+
+circshift <- function(v, n) {
+if (n == 0) v else c(tail(v, n), head(v, -n))
+}
+
+transpose_pitch = function(pitch_list, number_of_semitones) { # n = 1: C -> C#
+names = names(pitch_list)
+new_list = setNames(circshift(unname(pitch_list), number_of_semitones), names)
+new_list
+}
+
+transpose_pitches = function(df, n) { # n = 1 is C -> C#
+df %>% dplyr::mutate(pitches = purrr::map2(pitches, n, transpose_pitch))
+}
+
+# E min
+DTW_cover <-
+  get_tidy_audio_analysis("1ZczOoLuCyDO5dKUPndxf5") %>%
+  select(segments) %>%
+  unnest(segments) %>%
+  select(start, duration, pitches)
+
+DTW_cover_transposed = transpose_pitches(DTW_cover, 2)
+
+# A maj - F# min
+DTW_original <-
+  get_tidy_audio_analysis("3NfxSdJnVdon1axzloJgba") %>%
+  select(segments) %>%
+  unnest(segments) %>%
+  select(start, duration, pitches)
+
+compmus_long_distance(
+  DTW_original %>% mutate(pitches = map(pitches, compmus_normalise, "chebyshev")),
+  DTW_cover_transposed %>% mutate(pitches = map(pitches, compmus_normalise, "chebyshev")),
+  feature = pitches,
+  method = "euclidean"
+) %>%
+  ggplot(
+    aes(
+      x = xstart + xduration / 2,
+      width = xduration,
+      y = ystart + yduration / 2,
+      height = yduration,
+      fill = d
+    )
+  ) +
+  geom_tile() +
+  coord_equal() +
+  labs(x = "Cover by Lianne La Havas (transposed)", y = "Original by Aretha Franklin", title = "Dynamic Time Warping of \"Say a little prayer\"") +
+  theme_minimal() +
+  scale_fill_viridis_c(guide = NULL) + theme_ilo() + theme_tufte()
+```
+
+*** 
+
+Another interesting point to see if (and how) the generations differ from eachother, is to compare the cover of a song from the old generation, by an artist of the new generation.
+In the Dynamic Time Warping Matrix, *Say a little prayer* by *Aretha Franklin* is compared to the *cover* of *Lianne de Havas*. To compare the two songs, they need to be in the same key, as *Dynamic time warping* compares *pith* information. The cover was in Emin and the original in F#min, so the cover was transposed 2 semitones up to F#min.
+
+As we can see in the visualization there is no line that shows similarities. This is interesting because it is a cover of the same song, compared in the same key. The absence of similarities can have multiple reasons. The first is that the instrumentals are different. Besides that, the guitar in the cover version is very upfront and it played with a lot of vibrato which could throw the pitch information off. Lastly, the cover is a live performance and is sang in a different way than the original (which is not a live performance). It is interesting to see that the songs do not compare and all, which could mean that the new generation of soul has a very different way of expressing the genre than the old generation. However this is **very** generalized, as we only compare one cover here.
+
+***
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3NfxSdJnVdon1axzloJgba?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1ZczOoLuCyDO5dKUPndxf5?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+### Visualizing how the artists compare to eachother with **Clustering**
 
 ```{r}
 # set up classification
@@ -170,367 +526,6 @@ To see if the artists from the generation actually represent their own generatio
 
 As we can see, the clustering is not perfect. At the first split, FKJ and Tom Misch are clustered. These artists are quite similar and of the new generation, so it makes sense. The last "big" cluster that is split off contains Bill Withers, Aretha Franklin, Marvin Gaye and Stevie Wonder, all artists from the old generation. The two splits in between are more mixed. Ray Charles and Erykah Badu are mixed in with the clusters of the new generation here. Besides these two artists, the clustering is pretty good. 4 artists of the old generation are in the right cluster, and 2 artists of the new generation in the left cluster. This could mean that there is a pretty good parting of music of the old and new generation, but that Erykah Badu and Ray Charles made music that can be seen as more "timeless". Because everyone of the old generation is clustered at the last "major" split, apart from them. They are mixed in with the clusters from the new generation.
 
-### heatmap of clusters
-
-```{r}
-
-heatmap_ding <- heatmaply(
-  artists_all_filter_juice,
-  hclustfun = hclust,
-  hclust_method = "complete",  # Change for single, average, or complete linkage.
-  dist_method = "euclidean"
-)
-heatmap_ding
-
-```
-
-***
-
-Here we can see what features are selected for the clustering and what their role is. The selected features are the features that are discussed earlier in the portfolio, so you can get a good overview of how they compare in generations. The color of the feature indicates how it compares to other artists in the data. As we can see UITWERKEN
-
-### Corpus
-
-**Research Question**
-
-*How has the soul changed over time?*
-
-**Motivation**
-
-For my project, I wanted to research soul music. I am a musician myself, I make soul/jazz/funk/RnB. I am curious how the soul music I listen and make everyday came to be and how the genre may differ between earlier and later generations. This is why I decided to see how big soul artists through the years compare to eachother. To decide what artists I should include, I made a mix of artists that inspire me, artists that have meant a lot for the genre in the perspective of my guitar teacher (who finished his jazz conservatory master) and artists that made the top according to the internet (see source below). These are the artists per generation:
-
-- **Old Generation**: Erykah Badu, Steve Wonder, Bill Withers, Marvin Gaye, Ray charles, Aretha Franklin.
-
-- **new generation**: Tom Misch, Lianne De Havas, FKJ, Joy Crookes, Jorja Smith, Mahalia.
-
-My guitar teacher, me, and the sources mentioned earlier, think these artists really represent the genre in their time and think it is a good representation of what I want to research. I do think more many names could be added, such as **Bobby Hebbs**, but I don’t think this would be of use. 
-
-**Hypotheses**
-
-I suspect the most difference will be seen in tempo and time, as most songs have been going faster and getting shorter through the years The tracks of all these artists will be compared, I think Bill Withers is the most atypical, because he does a lot of genres besides soul alone (like blues etc.)
-
-
-*Source*: https://www.rollingstone.com/music/music-lists/rolling-stone-readers-pick-the-top-10-rb-soul-singers-of-all-time-16607/
-
-### Overview of the **new generation**
-
-```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
-ggplotly(
-  ggplot(new,                         # Set up the plot.
-    aes(
-      x = valence,
-      y = energy,
-      size = track.popularity,
-      colour = danceability,
-      label = track.name           # Labels will be interactively visible.
-    )  
-  ) + theme_ilo() + theme_tufte() +
-  geom_point(show.legend =TRUE) +                   # Scatter plot.
-  geom_rug(size = 0.1) +           # Add 'fringes' to show data distribution.
-  facet_wrap(~playlist_name) +           # Separate charts per country.
-  scale_x_continuous(              # Fine-tune the x axis.
-    limits = c(0, 1),
-    breaks = c(0, 0.50, 1),        # Use grid-lines for quadrants only.
-    minor_breaks = NULL            # Remove 'minor' grid-lines.
-  ) +
-  scale_y_continuous(              # Fine-tune the y axis in the same way.
-    limits = c(0, 1),
-    breaks = c(0, 0.50, 1),
-    minor_breaks = NULL
-  ) +
-  scale_colour_viridis_c(          # Use the cividis palette
-    option = "E",                  # Qualitative set.
-    alpha = 0.8,                   # Include some transparency
-  ) +
-  scale_size_continuous(           # Fine-tune the sizes of each point.
-  guide = "legend") +
-  theme_light() +                  # Use a simpler theme.
-  labs(                            # Make the titles nice.
-    x = "Valence",
-    y = "Energy"
-  )
-)
-
-```
-
-*** 
-
-In the graphs, the new generation data is visualized. Energy, valence, danceability and popularity are displayed per track of every playlist/artist used for this generation. 
-
-**Interesting observations**
-
-There was an **outlier**, in the *This is Mahalia* playlist. This song has **no  valence and tempo** stats, they are set to 0. Spotify has taken it out during the time I worked on the project. I Think this was a good decision, since it was a *track chat*, a discussion about a track she made, and not an actual song. I wanted to mention this, as it is possible for Spotify to put it back in, and in case that happens, I want to be able to explain it. In *This is Jorja Smith*, there are also some tracks with a popularity of 0, I am not sure how this can be possible since they where listened to and it is unclear how Spotify determines the popularity of a track.
-
-***
-
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO0AHQ3T?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO1x7AE9?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO0P3UNG?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX1ykpeqTwA5m?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO3w1CV3?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO1EwgdW?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-
-### Overview of the **old generation**
-
-```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
-ggplotly(
-  ggplot(old,                         # Set up the plot.
-    aes(
-      x = valence,
-      y = energy,
-      size = track.popularity,
-      colour = danceability,
-      label = track.name           # Labels will be interactively visible.
-    )
-  ) + theme_ilo() + theme_tufte() +
-  geom_point(show.legend = TRUE) +                   # Scatter plot.
-  geom_rug(size = 0.1) +           # Add 'fringes' to show data distribution.
-  facet_wrap(~playlist_name) +           # Separate charts per country.
-  scale_x_continuous(              # Fine-tune the x axis.
-    limits = c(0, 1),
-    breaks = c(0, 0.50, 1),        # Use grid-lines for quadrants only.
-    minor_breaks = NULL            # Remove 'minor' grid-lines.
-  ) +
-  scale_y_continuous(              # Fine-tune the y axis in the same way.
-    limits = c(0, 1),
-    breaks = c(0, 0.50, 1),
-    minor_breaks = NULL
-  ) +
-  scale_colour_viridis_c(          # Use the cividis palette
-    option = "E",                  # Qualitative set.
-    alpha = 0.8,                   # Include some transparency
-  ) +
-  scale_size_continuous(           # Fine-tune the sizes of each point.
-  guide = "legend") +
-  theme_light() +                  # Use a simpler theme.
-  labs(                            # Make the titles nice.
-    x = "Valence",
-    y = "Energy"
-  )
-)
-
-```
-
-***
-
-In the graphs, the old generation data is visualized. Energy, valence, danceability and popularity are displayed per track of every playlist/artist used for this generation. 
-
-**Interesting observations**
-
-What is interesting to see is that there is one **outlier**, a song of *Erykah Badu*. This one is called *"Hi"*, which is not a full song, but definitely music, it is in the *"This is Erykah Badu"* playlist. This song has **no  valence and tempo** stats, they are set to 0. Another interesting **outlier** is that a song of *Bill Withers, "I Don't Want You On My Mind"*, which has a **very high tempo** (240-250).
-
-*** 
-
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO4mP172?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO4zhZAI?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO0FPX4A?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX5MwHlrzAPLQ?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO1VI5MY?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO4iAGsg?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-
-### Taking a look at the **tempo** of the tempo-outlier in the old generation
-
-```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
-tempo_outlier <-
-  get_tidy_audio_analysis("3BaFRtmUWO1Z3gzc9zYRh2")
-
-outlier_graph1 <-
-  tempo_outlier %>%
-  tempogram(window_size = 8, hop_size = 1, cyclic = TRUE) %>%
-  ggplot(aes(x = time, y = bpm, fill = power)) +
-  geom_raster() +
-  scale_fill_viridis_c(guide = "none") +
-  labs(x = "Time (s)", y = "Tempo (BPM)") +
-  ggtitle("Cyclic tempogram of the outlier", subtitle = "Bill Withers, I Don't Want You On My Mind") +
-  theme_ilo() + theme_tufte()
-
-outlier_graph2 <-
-  tempo_outlier %>%
-  tempogram(window_size = 8, hop_size = 1, cyclic = FALSE) %>%
-  ggplot(aes(x = time, y = bpm, fill = power)) +
-  geom_raster() +
-  scale_fill_viridis_c(guide = "none") +
-  labs(x = "Time (s)", y = "Tempo (BPM)") + 
-  ggtitle("Regular tempogram of the outlier", subtitle = "Bill Withers, I Don't Want You On My Mind") +
-  theme_ilo() + theme_tufte()
-
-grid.arrange(outlier_graph1, outlier_graph2, ncol = 2)
-```
-
-***
-
-The **outlier** song of *Bill Withers, "I Don't Want You On My Mind"* has a which **very high tempo** (240-250). I wanted to see how this can be possible, since it is extraordinary to have a track with such high bpm.
-For the explanation of the tempo outlier, 2 tempograms were created. A cyclic tempogram (left) and a regular tempogram (right) visualize how tempo would be analyzed. As we can see in the non-cyclic graph, the brightest line around the tempo of 220-250 bpm. In the non-cyclic graph, we can see the brightest line is is around 120 bpm. This is the actual bpm. Spotify measures the tempo to high, a tempo octave to high even maybe. 
-
-***
-
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3BaFRtmUWO1Z3gzc9zYRh2?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-
-### comparing the generations **danceability, valence, tempo and energy**
-
-```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
-danceability <- 
-  ggplot(all, aes(x = danceability, y = generation, fill = generation)) +
-  geom_density_ridges(
-    aes(point_fill = generation, point_size = valence), 
-    alpha = .6, point_alpha = 0.1, jittered_points = FALSE
-  ) + theme_tufte() + theme_ilo() + ggtitle("Danceability")
-
-energy <-
-  ggplot(all, aes(x = energy, y = generation, fill = generation)) +
-  geom_density_ridges(
-    aes(point_fill = generation, point_size = valence), 
-    alpha = .6, point_alpha = 0.1, jittered_points = FALSE
-  ) + theme_tufte() + theme_ilo() + ggtitle("Energy")
-
-tempo <- 
-  ggplot(all, aes(x = tempo, y = generation, fill = generation)) +
-  geom_density_ridges(
-    aes(point_fill = generation, point_size = valence), 
-    alpha = .6, point_alpha = 0.1, jittered_points = FALSE
-  ) + theme_tufte() + theme_ilo() + ggtitle("Tempo")
-
-valence <-
-  ggplot(all, aes(x = valence, y = generation, fill = generation)) +
-  geom_density_ridges(
-    aes(point_fill = generation, point_size = valence), 
-    alpha = .6, point_alpha = 0.1, jittered_points = FALSE
-  ) + theme_tufte() + theme_ilo() + ggtitle("Valence")
-
-grid.arrange(danceability, energy, tempo, valence, ncol = 2)
-```
-
-*** 
-
-To see how the generations compare, some major characteristics are shown in graphs. As can be seen in the visualization, the *old generation* generally makes songs that are **higher in tempo and valence** then the *new generation*. This was surprising, since this means that the genre does not follow the trend of speeding up its songs.
-Besides that, the *new generation* generally makes songs that have **higher danceability**, but **lower energy** than the *old generation*. I think it is interesting that the **tempo** goes down, but the **danceability** goes up. This could imply that songs are getting **groovier**.
-
-### low level **Timbre coefficients** comparison between the generations
-
-```{r}
-old_gen_comp <-
-  old %>%
-  slice(1:30) %>%
-  add_audio_analysis()
-
-new_gen_comp <-
-  new %>%
-  slice(1:30) %>%
-  add_audio_analysis()
-
-all_gen_comp <-
-  old_gen_comp %>%
-  mutate(generation = "old") %>%
-  bind_rows(new_gen_comp %>% mutate(generation = "new"))
-
-genplt <-
-  all_gen_comp %>%
-  mutate(
-    timbre =
-      map(
-        segments,
-        compmus_summarise,
-        timbre,
-        method = "mean"
-      )
-  ) %>%
-  select(generation, timbre) %>%
-  compmus_gather_timbre() %>%
-  ggplot(aes(x = basis, y = value, fill = generation)) +
-  geom_violin() +
-  scale_fill_viridis_d() +
-  labs(x = "Spotify Timbre Coefficients", y = "", fill = "Generation", 
-       title = "Comparison of Spotify Timbre coefficients") +
-  theme_ilo() + theme_tufte()
-
-
-genplt
-
-```
-
-***
-
-Timbre is can be described as the *feel* of a track, or in this case a generation. While the term is hard to describe, this can be a nice way of summarizing what it means. Because it is interesting to see if the *feel* of the generations has changed, lower level timbre coefficients are compared. 
-As we can see, most timbre coefficients do not differ a lot between the generations, except 2 and 4. This could mean that the feel of the tracks do not have changed a lot in general, but that there are some slight differences. This could be explained by representing the same genre, because the tracks all have a similar *soul* feeling.
-
-### comparing an original with a cover with **Dynamic time warping**
-
-```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
-
-circshift <- function(v, n) {
-if (n == 0) v else c(tail(v, n), head(v, -n))
-}
-
-transpose_pitch = function(pitch_list, number_of_semitones) { # n = 1: C -> C#
-names = names(pitch_list)
-new_list = setNames(circshift(unname(pitch_list), number_of_semitones), names)
-new_list
-}
-
-transpose_pitches = function(df, n) { # n = 1 is C -> C#
-df %>% dplyr::mutate(pitches = purrr::map2(pitches, n, transpose_pitch))
-}
-
-# E min
-DTW_cover <-
-  get_tidy_audio_analysis("1ZczOoLuCyDO5dKUPndxf5") %>%
-  select(segments) %>%
-  unnest(segments) %>%
-  select(start, duration, pitches)
-
-DTW_cover_transposed = transpose_pitches(DTW_cover, 2)
-
-# A maj - F# min
-DTW_original <-
-  get_tidy_audio_analysis("3NfxSdJnVdon1axzloJgba") %>%
-  select(segments) %>%
-  unnest(segments) %>%
-  select(start, duration, pitches)
-
-compmus_long_distance(
-  DTW_original %>% mutate(pitches = map(pitches, compmus_normalise, "chebyshev")),
-  DTW_cover_transposed %>% mutate(pitches = map(pitches, compmus_normalise, "chebyshev")),
-  feature = pitches,
-  method = "euclidean"
-) %>%
-  ggplot(
-    aes(
-      x = xstart + xduration / 2,
-      width = xduration,
-      y = ystart + yduration / 2,
-      height = yduration,
-      fill = d
-    )
-  ) +
-  geom_tile() +
-  coord_equal() +
-  labs(x = "Cover by Lianne La Havas (transposed)", y = "Original by Aretha Franklin", title = "Dynamic Time Warping of \"Say a little prayer\"") +
-  theme_minimal() +
-  scale_fill_viridis_c(guide = NULL) + theme_ilo() + theme_tufte()
-```
-
-*** 
-
-Another interesting point to see if (and how) the generations differ from eachother, is to look at the cover of a song from the old generation, by an artist of the new generation.
-In the Dynamic Time Warping Matrix, *Say a little prayer* by *Aretha Franklin* is compared to the *cover* of *Lianne de Havas*. To compare the two songs, they need to be in the same key, as *Dynamic time warping* compares *pith* information. The cover was in Emin and the original in F#min, so the cover was transposed 2 semitones up to F#min.
-
-As we can see in the visualization there is no line that shows similarities. This is interesting because it is a cover of the same song, compared in the same key. The absence of similarities can have multiple reasons. The first is that the instrumentals are different. Besides that, the guitar in the cover version is very upfront and it played with a lot of vibrato which could throw the pitch information off. Lastly, the cover is a live performance and is sang in a different way than the original (which is not a live performance). It is interesting to see that the songs do not compare and all, which could mean that the new generation of soul has a very different way of expressing the genre than the old generation. However this is **very** generalized, as we only compare one cover here.
-
-***
-
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3NfxSdJnVdon1axzloJgba?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1ZczOoLuCyDO5dKUPndxf5?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-
 ### Conclusion and Discussion
 
 **Conclusion**
@@ -541,9 +536,9 @@ MORE MUSICOLOGICAL TERMS TOEVOEGEN EN OVERAL TITLES ENZO
 
 **Discussion**
 
-In the portfolio, the old and new generation of soul artists exist of 6 (arbitrarily chosen) artists. While this gives some representation of how the generations compare, for further research it is adviced to use larger artist groups, with artists chosen carefully. Another point is that the comparison of the cover ALS GETRAINSPOSED NOG FIXEN!!!!!!!!!!!!!!!!!!, only consists of 1 cover. This is a very small number of comparisons, and needs to be bigger in future research.HOOFDLETTERS ENZ
+In the portfolio, the old and new generation of soul artists exist of 6 (arbitrarily chosen) artists. While this gives some representation of how the generations compare, for further research it is adviced to use larger artist groups, with artists chosen carefully. Furthermore, the outliers in the generations are not taken out in this research, this is because spotify keeps putting them in and taking them out. This means sometimes the outliers are in the data and other times they are not. To improve this, they should be removed at the time they are both in there, and the data should be saved to work with. Another point is that the comparison of an original with a cover, only consists of 1 cover. This is a very small number of comparisons, and needs to be bigger in future research.
 
-### Appendix: **chromagram, keyogram and chordogram** of an interesting soul track
+### Appendix: **chromagram and keyogram** of an interesting soul track
 
 ```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
 
@@ -705,12 +700,12 @@ sunny2 <-
   labs(x = "Time (s)", y = "", title = "Chordogram of \"Sunny\"", subtitle = "Transposing 3x") +
   theme_ilo() + theme_tufte()
 
-grid.arrange(sunny1, sunny, ncol = 2, widths = 1:2)
+grid.arrange(sunny1, sunny, ncol = 2)
 ```
 
 ***
 
-I decided to visualize the song *"Sunny"* by *Marvin gaye* (the original is from Bobby Hebbs).
+I decided to visualize the song *"Sunny"* by *Marvin Gaye* (the original is from Bobby Hebbs).
 I really wanted to visualize this song, because it is a great song in itself **transposes** a few times. As seen in the chromogram, the song starts in *Fmin* transposes to *F#min*, *Gmin* and ends in *G#min*. We can see this in our keyogram and chordogram visualized as well.
 I think this song is very interesting to see in the visualization, as you can "see the transposing happen". 
 
@@ -720,7 +715,7 @@ I think this song is very interesting to see in the visualization, as you can "s
 
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4vju55Ag7apDL2CfotuE7Q?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
-### appendix: **Self-Similarity Matrices** for a song of **Tom Misch & FKJ**
+### Appendix: **Self-Similarity Matrices** of a song of **Tom Misch & FKJ**
 
 ```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
 tom_misch_self_similar <-   
@@ -785,7 +780,7 @@ grid.arrange(SS1, SS2, ncol = 2)
 
 *** 
 
-To understand how the structure of a song works, a song of the new generation is visualized. The song is made by 2 artist from the new generation, making it more representable for the genre than other songs. In the Self-Similarity matrix, the song *Losing my way* from *Tom Misch & FKJ* is analized. First we analize via a timbre SSM. **Timbre** can be described as the feel of a track, and what different instruments are used, but the term is hard to describe. As the timbre SS matrix shows, there are different sections in the song that repeated. The sections are as A - B - C - (B+C) - D. As we can see in the chroma SS matrix, different segments of the song have different pitch characteristics. Some repetitions are high in pitch and others are low. light means the pitch characteristics are way different there then in the rest of the song. This is the same for the end. the rest of the pattern follows the sections, as explained above.
+To understand how the structure of a song works, a song of the new generation is visualized with *Self Similarity matrices (SSM)*. The song is made by 2 artist from the new generation, making it more representable for the genre than other songs. In the Self-Similarity matrices, the song *Losing my way* from *Tom Misch & FKJ* is analized. First we analize via a **Timbre SSM**. **Timbre** can be described as the feel of a track, and what different instruments are used, but the term is hard to describe. As the **Timbre SSM shows**, there are different sections in the song that repeated. The sections are as A - B - C - A - (B+C) - D. The **Chroma SSM** shows how **pitch** characteristics of a song relate to eachother As we can see in the chroma SS matrix, different segments of the song have different pitch characteristics. Some repetitions are high in pitch and others are low. Light means the pitch characteristics are way different there then in the rest of the song. This is the case for the start and end of the song. The rest of the pattern follows the sections quite well, as explained above.
 
 ***
 

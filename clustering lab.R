@@ -7,6 +7,17 @@ library(compmus)
 library(dendextend)
 library(pvclust)
 
+theme_ilo <- function(){
+  theme_minimal() +
+    theme(
+      text = element_text(color = "gray25"),
+      plot.subtitle = element_text(size = 12),
+      plot.caption = element_text(color = "gray30"),
+      plot.background = element_rect(fill = "gray95"),
+      plot.margin = unit(c(5, 10, 5, 10), units = "mm")
+    )
+}
+
 fkj <- get_playlist_audio_features("", "37i9dQZF1DZ06evO1x7AE9")
 tom_misch <- get_playlist_audio_features("", "37i9dQZF1DZ06evO0P3UNG")
 lianne_de_havas <- get_playlist_audio_features("", "37i9dQZF1DZ06evO1EwgdW")
@@ -103,7 +114,6 @@ dend <- as.dendrogram(hc_all)
 dend <- dend %>%
   color_branches(k = 12) %>%
   set("branches_lwd", c(2))
-  par(mfrow = c(1,1))
 dend <- color_labels(dend, k = 12)
 plot(dend)
 
@@ -120,3 +130,22 @@ heatmaply(
   hclust_method = "complete",  # Change for single, average, or complete linkage.
   dist_method = "euclidean"
 )
+
+
+### heatmap of clusters -->
+  
+  # ```{r}
+  
+  # heatmap_ding <- heatmaply(
+  #   artists_all_filter_juice,
+  #   hclustfun = hclust,
+  #   hclust_method = "complete",  # Change for single, average, or complete linkage.
+  #   dist_method = "euclidean"
+  # )
+  # heatmap_ding
+  
+# ```
+
+# ***
+
+# Here we can see what features are selected for the clustering and what their role is. The selected features are the features that are discussed earlier in the portfolio, so you can get a good overview of how they compare in generations. The color of the feature indicates how it compares to other artists in the data. As we can see UITWERKEN
