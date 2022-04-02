@@ -132,20 +132,3 @@ heatmaply(
 )
 
 
-### heatmap of clusters -->
-  
-  # ```{r}
-  
-  # heatmap_ding <- heatmaply(
-  #   artists_all_filter_juice,
-  #   hclustfun = hclust,
-  #   hclust_method = "complete",  # Change for single, average, or complete linkage.
-  #   dist_method = "euclidean"
-  # )
-  # heatmap_ding
-  
-# ```
-
-# ***
-
-# Here we can see what features are selected for the clustering and what their role is. The selected features are the features that are discussed earlier in the portfolio, so you can get a good overview of how they compare in generations. The color of the feature indicates how it compares to other artists in the data. As we can see UITWERKEN
