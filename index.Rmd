@@ -83,7 +83,7 @@ theme_ilo <- function(){
 }
 ```  
 
-### **Corpus**
+### **Introduction**
 
 **Research Question**
 
@@ -93,21 +93,26 @@ theme_ilo <- function(){
 
 For my project, I wanted to research soul music. I am a musician myself, I make soul/jazz/funk/RnB. I am curious how the soul music I listen and make everyday came to be 
 and how the genre may differ between earlier and later generations. This is why I decided to see how big soul artists through the years compare to eachother. To decide what artists I should include, I made a mix of artists that inspire me, 
-artists that have meant a lot for the genre in the perspective of my guitar teacher (who finished his jazz conservatory master) and artists that made the top according to the internet (see source below). These are the artists per generation:
+artists that have meant a lot for the genre in the perspective of my guitar teacher (who finished his jazz conservatory master) and artists that made the top according to the internet (Source 1). These are the artists per generation:
 
 - **Old Generation**: Erykah Badu, Steve Wonder, Bill Withers, Marvin Gaye, Ray charles, Aretha Franklin.
 
 - **new generation**: Tom Misch, Lianne De Havas, FKJ, Joy Crookes, Jorja Smith, Mahalia.
 
-My guitar teacher, me, and the sources mentioned earlier, think these artists really represent the genre in their time and think it is a good representation of what I want to research. I do think more many names could be added, such as **Bobby Hebbs**, but I don’t think this would be of use. 
+My guitar teacher, me, and the sources mentioned earlier, think these artists really represent the genre in their time and think it is a good representation of what I want to research. I do think more many names could be added, such as **Bobby Hebbs**, but I don’t think this would be of use. The tracks of all these artists will be compared, I think **Bill Withers** is the most atypical, because he does a lot of genres besides soul alone (like blues etc.).
 
-**Hypotheses**
+**Assumptions**
 
-I suspect the most difference will be seen in tempo and time, as most songs have been going faster and getting shorter through the years.
-The tracks of all these artists will be compared, I think Bill Withers is the most atypical, because he does a lot of genres besides soul alone (like blues etc.)
+I suspect the most difference will be seen in **tempo**, as most songs have been going faster and getting shorter through the years (Source 2). Besides that, I expect a change in **timbre**. Through the years, music has been getting more "electronic", with the upcoming of new instruments, like virtual synthesizers (Source 3). Because of better music production standards, compression, limiting and recording, I also expect music to be more **energetic** (louder) over the years (Source 4). Since all of the artists do represent the same genre, I think these differences won't be large, but noticeable.
 
+*Source 1*: https://www.rollingstone.com/music/music-lists/rolling-stone-readers-pick-the-top-10-rb-soul-singers-of-all-time-16607/
 
-*Source*: https://www.rollingstone.com/music/music-lists/rolling-stone-readers-pick-the-top-10-rb-soul-singers-of-all-time-16607/
+*Source 2*: https://www.bbc.com/news/entertainment-arts-53167325
+
+*Source 3*: https://www.theguardian.com/technology/2013/nov/25/pop-music-louder-less-acoustic
+
+*Source 4*: https://en.wikipedia.org/wiki/Loudness_war
+
 
 ### Overview of the **new generation**
 
@@ -152,11 +157,11 @@ ggplotly(
 
 *** 
 
-In the graphs, the new generation data is visualized. Energy, valence, danceability and popularity are displayed per track of every playlist/artist used for this generation. 
+In the graphs, the new generation data is visualized. **Energy, valence, danceability and popularity** are displayed per track of every playlist/artist used for this generation. 
 
 **Interesting observations**
 
-There was an **outlier** *"Silly Girl - Track Chat*, in the *This is Mahalia* playlist. This song had **no valence and danceability** stats, they are set to 0. Spotify has taken it out during the time I worked on the project. I Think this was a good decision, since it was a *track chat*, a discussion about a track she made, and not an actual song. I wanted to mention this, as it is possible for Spotify to put it back in, and in case that happens, I want to be able to explain it. Besides the outlier, there are some tracks in *This is Jorja Smith* playlist with a **popularity** of 0, I am not sure how this can be possible since they where listened to and it is unclear how Spotify determines the popularity of a track.
+There was an **outlier**, *"Silly Girl - Track Chat*, in the *This is Mahalia* playlist. This song had **no valence and danceability** stats, they are set to 0. Spotify has taken it out during the time I worked on the project. I Think this was a good decision, since it was a *track chat*, a discussion about a track she made, and not an actual song. I wanted to mention this, as it is possible for Spotify to put it back in, and in case that happens, I want to be able to explain it. Besides the outlier, there are some tracks in *This is Jorja Smith* playlist with a **popularity** of 0, I am not sure how this can be possible since they where listened to and it is unclear how Spotify determines the popularity of a track.
 
 ***
 
@@ -215,11 +220,11 @@ ggplotly(
 
 ***
 
-In the graphs, the old generation data is visualized. Energy, valence, danceability and popularity are displayed per track of every playlist/artist used for this generation. 
+In the graphs, the old generation data is visualized. **Energy, valence, danceability and popularity** are displayed per track of every playlist/artist used for this generation. 
 
 **Interesting observations**
 
-What is interesting to see is that there is one **outlier**, a song of *Erykah Badu*. This one is called *"Hi"*, which is not a "regular" song, but definitely music. It is in the *"This is Erykah Badu"* playlist. This song has **no  valence and danceability** stats, they are set to 0. Because of the Another interesting **outlier** is that a song of *Bill Withers, "I Don't Want You On My Mind"*, which has a **very high tempo** (240-250).
+What is interesting to see is that there is one **outlier**, a song of *Erykah Badu*. This one is called *"Hi"*, which is not a "regular" song, but definitely music. It is in the *"This is Erykah Badu"* playlist. This song has **no  valence and danceability** stats, they are set to 0. Another interesting **outlier** is a song of *Bill Withers, "I Don't Want You On My Mind"*, which has a **very high tempo** (240-250). 
 
 *** 
 
@@ -235,7 +240,7 @@ What is interesting to see is that there is one **outlier**, a song of *Erykah B
 
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1DZ06evO4iAGsg?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
-### Taking a look at the **tempo** of the **tempo-outlier** in the old generation
+### What is the "actual" **tempo** of the **tempo-outlier** in the old generation?
 
 ```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
 tempo_outlier <-
@@ -267,13 +272,13 @@ grid.arrange(outlier_graph1, outlier_graph2, ncol = 2)
 ***
 
 The **outlier** song of *Bill Withers, "I Don't Want You On My Mind"* has a **very high tempo** (240-250). I wanted to see how this can be possible, since it is extraordinary to have a track with such high bpm.
-For the explanation of the tempo outlier, two *Fourier tempograms* were created (these measure tempo based on onsets of Spotify segments). A cyclic tempogram (left) and a regular tempogram (right) visualize how tempo would be analyzed. We created the cyclic tempogram as well, because the *Fourier-tempogram* tends to pick up strongly on tempo harmonics, thus Wrapping these into a cyclic tempogram can be more informative. As we can see in the regular tempogram, the brightest line around the tempo of 220-250 bpm. In the non-cyclic graph, we can see the brightest line is is around 120 bpm. This is the actual bpm. Spotify measures the tempo to high, because of the tempo harmonics. 
+For the explanation of the tempo outlier, two *Fourier tempograms* were created (these measure tempo based on onsets of Spotify segments). A cyclic tempogram (left) and a regular tempogram (right) visualize how tempo would be analyzed. We created the cyclic tempogram as well, because the *Fourier-tempogram* tends to pick up strongly on tempo harmonics, thus Wrapping these into a cyclic tempogram can be more informative. As we can see in the regular tempogram, the brightest line around the tempo of 220-250 bpm. In the non-cyclic graph, we can see the brightest line is is around **120 bpm**. This is the "actual" tempo of the track. Spotify measures the tempo to high, because of the tempo harmonics. 
 
 ***
 
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/3BaFRtmUWO1Z3gzc9zYRh2?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
-### Comparing the generations **danceability, valence, tempo and energy**
+### How do the generations compare in **danceability, valence, tempo and energy**?
 
 ```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
 danceability <- 
@@ -309,10 +314,10 @@ grid.arrange(danceability, energy, tempo, valence, ncol = 2)
 
 *** 
 
-To see how the generations compare, some major characteristics are shown in graphs. As can be seen in the visualization, the *old generation* generally makes songs that are **higher in tempo and valence** then the *new generation*. This was surprising, since this means that the genre does not follow the trend of speeding up its songs.
-Besides that, the *new generation* generally makes songs that have **higher danceability**, but **lower energy** than the *old generation*. I think it is interesting that the **tempo** goes down, but the **danceability** goes up. This could imply that songs are getting **groovier**.
+To see how the generations compare, some major characteristics are shown in graphs. As can be seen in the visualization, the *old generation* generally makes songs that are **higher in tempo and valence** then the *new generation*. The higher tempo was surprising, since this means that the genre does not follow the trend of speeding up its songs.
+Besides that, the *new generation* generally makes songs that have **higher danceability**, but **lower energy** than the *old generation*. The lower energy was surprising as well, since the genre does not follow the trend of louder/more energetic music as well. I think it is interesting that the **tempo** goes down, but the **danceability** goes up. This could imply that songs are getting **groovier**.
 
-### Low level **Timbre coefficients** comparison between the generations
+### How do the generations compare in low level **timbre coefficients**?
 
 ```{r}
 
@@ -367,8 +372,8 @@ genplt
 
 ***
 
-Timbre is can be described as the *feel* of a track, or in this case a generation. While the term is hard to describe, this can be a nice way of summarizing what it means. Because it is interesting to see if the *feel* of the generations has changed, lower level timbre coefficients are compared. 
-As we can see, most timbre coefficients do not differ a lot between the generations, except 2 and 4. This could mean that the feel of the tracks do not have changed a lot in general, but that there are some slight differences. This could be explained by the fact that the tracks are of the same genre, thus all having a similar *soul* feeling.
+**Timbre** is can be described as the *feel* of a track, or in this case a generation. While the term is hard to describe, this can be a nice way of summarizing what it means. Because it is interesting to see if the *feel* of the generations has changed, lower level timbre coefficients are compared. We expected this to differ noticeably, since music has been getting more electronic, but not drastically, since the tracks are from the same genre.
+As we can see, **most timbre coefficients do not differ a lot between the generations**, but there are a few noticeable ones: **2, 3 and 4**. This could mean that the feel of the tracks do not have changed a lot in general, but that there are some slight differences. This could be explained by the fact that the tracks are of the same genre, thus all having a similar *soul* feeling. This matches with our assumption.
 
 ### Comparing an original with a cover with **Dynamic Time Warping**
 
@@ -428,10 +433,10 @@ compmus_long_distance(
 
 *** 
 
-Another interesting point to see if (and how) the generations differ from eachother, is to compare the cover of a song from the old generation, by an artist of the new generation.
-In the Dynamic Time Warping Matrix, *Say a little prayer* by *Aretha Franklin* is compared to the *cover* of *Lianne de Havas*. To compare the two songs, they need to be in the same key, as *Dynamic time warping* compares *pith* information. The cover was in Emin and the original in F#min, so the cover was transposed 2 semitones up to F#min.
+Another interesting point to see if (and how) the generations differ from eachother, is to **compare the cover of a song from the old generation, by an artist of the new generation**.
+In the Dynamic Time Warping Matrix, *Say a little prayer* by *Aretha Franklin* is compared to the *cover* of *Lianne de Havas*. To compare the two songs, they need to be in the same key, as *Dynamic time warping* compares *pith* information. The cover was in Emin and the original in F#min, so the cover was transposed two semitones up to F#min.
 
-As we can see in the visualization there is no line that shows similarities. This is interesting because it is a cover of the same song, compared in the same key. The absence of similarities can have multiple reasons. The first is that the instrumentals are different. Besides that, the guitar in the cover version is very upfront and it played with a lot of vibrato which could throw the pitch information off. Lastly, the cover is a live performance and is sang in a different way than the original (which is not a live performance). It is interesting to see that the songs do not compare and all, which could mean that the new generation of soul has a very different way of expressing the genre than the old generation. However this is **very** generalized, as we only compare one cover here.
+As we can see in the visualization there is **no line that shows similarities**. This is interesting because it is a cover of the same song, compared in the same key. The absence of similarities can have multiple reasons. The first is that the instrumentals are different. Besides that, the guitar in the cover version is very upfront and it played with a lot of vibrato which could throw the pitch information off. Lastly, the cover is a live performance and is sang in a different way than the original (which is not a live performance). It is interesting to see that the songs do not compare and all, which could mean that the new generation of soul has a very different way of expressing the genre than the old generation. However this is **very** generalized, as we only compare one cover here.
 
 ***
 
@@ -439,7 +444,7 @@ As we can see in the visualization there is no line that shows similarities. Thi
 
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/1ZczOoLuCyDO5dKUPndxf5?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
-### Visualizing how the artists compare to eachother with **Clustering**
+### How the artists actually compare to eachother with **Clustering**?
 
 ```{r}
 # set up classification
@@ -482,13 +487,11 @@ artists_all <-
   unnest(cols = c(pitches, timbre))
 
 artists_all_filter <- artists_all %>% group_by(playlist_name) %>%
-  summarise_at(vars(danceability, energy, speechiness, acousticness, instrumentalness, valence, tempo, c04, c02), mean)
-
-
+  summarise_at(vars(danceability, energy, speechiness, acousticness, instrumentalness, valence, tempo, c04, c03, c02), mean)
 
 artists_all_filter_juice <-
   recipe(
-    playlist_name ~ #track artist RECAST AS FACTOR EN DAN <- factor(list, levels = c("name goeie orders moet precies"))
+    playlist_name ~
       danceability +
       energy +
       speechiness +
@@ -496,12 +499,11 @@ artists_all_filter_juice <-
       instrumentalness +
       valence +
       tempo +
-      c02 + c04,
+      c02 + c04 + c03,
     data = artists_all_filter
   ) %>%
   step_center(all_predictors()) %>%
   step_scale(all_predictors()) %>% 
-  # step_range(all_predictors()) %>% 
   prep(artists_all_filter %>% mutate(playlist_name = substring(playlist_name, 8))) %>%
   juice() %>%
   column_to_rownames("playlist_name")
@@ -522,30 +524,11 @@ plot(dend)
 
 ***
 
-To see if the artists from the generation actually represent their own generation, clustering was performed. If the generations are grouped clearly in 2 clusters, there would be less overlap than if they are not. To perform this clustering, the average of all songs per artist was taken, to get an "average overview" per artist. This is based on the features that we discussed earlier in the portfolio: **danceability, energy, speechiness, acousticness, instrumentalness, valence, tempo, c04, c02** (the last two are low level timbre components). On this averaged data per artist, clustering is performed. For this, Average, complete and single clustering linkage methods where tried, of which average gave the best (and only usable) result. What these methods do exactly, is to technical to discuss in this portfolio. The result of the clustering is discussed below.
+To see if the artists from the generation actually represent their own generation, clustering was performed. If the generations are grouped clearly in two clusters, there would be less overlap than if they are not. To perform this clustering, the average of all songs per artist was taken, to get an "average overview" per artist. This is based on the features that we discussed earlier in the portfolio: **danceability, energy, speechiness, acousticness, instrumentalness, valence, tempo, c02, c03, c04** (the last two are low level timbre components). On this averaged data per artist, clustering is performed. For this, average, complete and single clustering linkage methods where tried, of which average gave the best (and only usable) result. What these methods do exactly, is too technical to discuss in this portfolio. The result of the clustering is discussed below.
 
-As we can see, the clustering is not perfect. At the first split, FKJ and Tom Misch are clustered. These artists are quite similar and of the new generation, so it makes sense. The last "big" cluster that is split off contains Bill Withers, Aretha Franklin, Marvin Gaye and Stevie Wonder, all artists from the old generation. The two splits in between are more mixed. Ray Charles and Erykah Badu are mixed in with the clusters of the new generation here. Besides these two artists, the clustering is pretty good. 4 artists of the old generation are in the right cluster, and 2 artists of the new generation in the left cluster. This could mean that there is a pretty good parting of music of the old and new generation, but that Erykah Badu and Ray Charles made music that can be seen as more "timeless". Because everyone of the old generation is clustered at the last "major" split, apart from them. They are mixed in with the clusters from the new generation.
+As we can see, **the clustering is not perfect**. At the first split, FKJ and Tom Misch are clustered. These artists are quite similar and of the new generation, so it makes sense. The last "big" cluster that is split off contains Bill Withers, Aretha Franklin, Marvin Gaye and Stevie Wonder, all artists from the old generation. The two splits in between are more mixed. Ray Charles and Erykah Badu are mixed in with the clusters of the new generation here. Besides these two artists, the clustering is pretty good. Four artists of the old generation are in the right cluster, and 2 artists of the new generation in the left cluster. This could mean that there is a pretty good parting of music of the old and new generation, but that Erykah Badu and Ray Charles made music that can be seen as more "timeless". Because everyone of the old generation is clustered at the last "major" split, apart from them. They are mixed in with the clusters from the new generation.
 
-### Taking a deeper look into the **Hierarchical clustering**
-
-```{r}
-
-heatmap_ding <- heatmaply(
-  artists_all_filter_juice,
-  hclustfun = hclust,
-  hclust_method = "complete",  # Change for single, average, or complete linkage.
-  dist_method = "euclidean"
-)
-heatmap_ding
-
-```
-
-***
-
-Here we can see what features are selected for the clustering and what their role is. The selected features are the features that are discussed earlier in the portfolio, so you can get a good overview of how they compare in generations. The color of the feature indicates how it compares to other artists in the data. As we can see UITWERKEN
-
-
-### **Conclusion** and **Discussion**
+### What did we **learn** and what could be **improved**?
 
 So, what can we **learn from the analyses**?
 
@@ -554,20 +537,14 @@ First of all, when comparing the old and new generation of soul with the chosen 
 we learned that the **energy, valence, danceability and tempo** between generations were different.
 Sometimes it were minor changes, other times more significant. 
 It is possible that the new generation makes groovier music, as the tempo went down and danceability went up,
-comparing to the old generation.When comparing the low level Timbre components,
-the genres did not differ that much, except for two components. This could be because all the artists represent
-the soul genre, thus making similar music. Lastly, we saw that clustering the artists went fairly well, most artists
-from the old and new generation where clustered together, except for **Erykah Badu** and **Ray Charles**. This could 
-be because their music is more *timeless* than the music of other artists from the old generation, resulting in a
-"clustering blend" between old and new generation in their case. From this can be concluded that the genre of soul
-did change over generations, but it is still soul. There are no major changes, but there are changes. This means new
-soul music is "innovative" compared to the older music.
+comparing to the old generation. Our initial assumptions about the features were wrong, the soul genre does not follow the trend of getting higher in tempo and energy. One explanation could be that the trends are set by pop music, which soul is not (yet).
+When comparing the low level Timbre components, the generations did not differ much, except for three components. This corresponds with our assumptions: because the tracks represent the same genre, the timbre did not differ much, but noticeably, since new instruments are used. Lastly, we saw that clustering the artists went fairly well, most artists from the old and new generation where clustered together, except for **Erykah Badu** and **Ray Charles**. This could be because their music is more *timeless* than the music of other artists from the old generation, resulting in a "clustering blend" between old and new generation in their case. Some of our initial assumptions where **wrong**, while others were **correct**. We can conclude that **the genre of soul did change over time, but not drastically**.
 
 What could be improved in **future research?**
 
-In the portfolio, the old and new generation of soul artists exist of 6 (arbitrarily chosen) artists. While this gives some representation of how the generations compare, for further research it is adviced to use larger artist groups, with artists chosen carefully. Furthermore, the outliers in the generations are not taken out in this research, this is because Spotify keeps putting them in and taking them out. This means sometimes the outliers are in the data and other times they are not. To improve this, the outliers should be removed at the time they are both in there, after which teh data is saved to work with in the future. Another point is that the comparison of an original with a cover, only consists of 1 cover. This is a very small number of comparisons, and needs to be bigger in future research.
+In the portfolio, the old and new generation of soul artists exist of 6 (arbitrarily chosen) artists. While this gives some representation of how the generations compare, for further research it is adviced to use larger artist groups, with artists chosen carefully. Furthermore, the outliers in the generations were not taken out in this research, this is because Spotify keeps putting them in and taking them out. This means sometimes the outliers are in the data and other times they are not. To improve this, the outliers should be removed at the time they are both in there, after which the data is saved to work with in the future. Another point is that the comparison of an original with a cover, only consists of *one* cover. This is a very small number of comparisons, and needs to be bigger in future research. Lastly, the **popularity** feature is vague. The Spotify API does not explain how this feature is measured, or why there is suddenly outliers with 0 popularity, like we saw in the new generation. For further research, it would be interesting to see how the popularity of soul changes over time as well, since soul elements appear in pop music more often. For this research, it needs to be clear how the popularity feature is measured.
 
-### Appendix: **chromagram and keyogram** of an interesting soul track
+### Appendix: What does **transposing** look like?
 
 ```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
 
@@ -735,8 +712,7 @@ grid.arrange(sunny1, sunny, ncol = 2, widths = 1:2)
 ***
 
 I decided to visualize the song *"Sunny"* by *Marvin Gaye* (the original is from Bobby Hebbs).
-I really wanted to visualize this song, because it is a great song in itself **transposes** a few times. As seen in the chromogram, the song starts in *Fmin* transposes to *F#min*, *Gmin* and ends in *G#min*. We can see this in our keyogram and chordogram visualized as well.
-I think this song is very interesting to see in the visualization, as you can "see the transposing happen". 
+I really wanted to visualize this song, because it is a great song in itself **transposes** a few times. As seen in the chromogram, the song starts in *Fmin* transposes to *F#min*, *Gmin* and ends in *G#min*. We can see this in our keyogram as well. I think this song is very interesting to see in the visualization, as you can *"see the transposing happen"*. 
 
 ***
 
@@ -744,7 +720,7 @@ I think this song is very interesting to see in the visualization, as you can "s
 
 <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/4vju55Ag7apDL2CfotuE7Q?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
-### Appendix: **Self-Similarity Matrices** of a song of **Tom Misch & FKJ**
+### Appendix: How can we describe the **structure** of a track?
 
 ```{r fig.height = 6, fig.width = 8, fig.align = "center", warning=FALSE,  echo = FALSE}
 tom_misch_self_similar <-   
@@ -809,11 +785,11 @@ grid.arrange(SS1, SS2, ncol = 2)
 
 *** 
 
-To understand how the structure of a track works, a track of the new generation is visualized with *Self Similarity matrices (SSM)*. The track is made by 2 artist from the new generation, making it more representable for the genre than other songs. In the Self-Similarity matrices, the track *Losing my way* from *Tom Misch & FKJ* is analysed.
+To understand how the structure of a track works, a track of the new generation is visualized with *Self Similarity matrices (SSM)*. The track is made by two artists from the new generation, making it more representable for the generation than other songs. In the Self-Similarity matrices, the track *Losing my way* from *Tom Misch & FKJ* is analysed.
 
 First we analyse via a **Timbre SSM**. **Timbre** can be described as the feel of a track, and what different instruments are used, but the term is hard to describe. As the **Timbre SSM shows**, there are different sections in the song that repeated. The sections are as A - B - C - A - (B+C) - D. 
 
-The **Chroma SSM** shows how **pitch** characteristics of a song relate to eachother As we can see in the chroma SS matrix, different segments of the song have different pitch characteristics. Light means the pitch characteristics are way different there then in the rest of the track. This is the case for the intro, bridge and outro of the tra. The rest of the pattern follows the sections quite well, as explained above. The colors in the rest of the matrix are darker, even though the pitch characteristics are quite different during the rest of the song. This is because compared to the intro and outro, the pitch characteristics during the rest of the track are quite similar.
+The **Chroma SSM** shows how **pitch** characteristics of a song relate to eachother As we can see in the chroma SSM, different segments of the song have different pitch characteristics. Light means the pitch characteristics are *way different* then in the rest of the track. This is the case for the **intro, bridge and outro** of the track. The rest of the pattern follows the sections, described above, quite well, as explained above. The colors in the rest of the matrix are darker, even though the pitch characteristics differentiate during the rest of the song. This is because compared to the intro, bridge and outro, the pitch characteristics of the rest of the track are quite similar.
 
 ***
 
